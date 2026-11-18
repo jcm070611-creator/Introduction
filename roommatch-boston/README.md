@@ -1,23 +1,15 @@
-# RoomMatch Boston — Messaging Prototype
+# RoomMatch Boston — Interactive MVP (v4)
 
-An interactive, single-file Korean-language roommate matching demo. Open `index.html` in a web browser.
+Open `index.html` locally in your browser, or publish it using GitHub Pages. A single HTML file contains the full demo, including embedded AI-generated fictional profile photos.
 
 ## Features
 
-- Discover six fictional Korean-student-style roommate profiles with AI-generated example portraits
-- Weighted lifestyle compatibility, hard-constraint checks, and saved candidates
-- Profile comparisons and editable introductory messages
-- **Private messaging demo:** submitting an introduction opens a separate **메시지** tab and creates a conversation
-- Follow-up messages, multiple chat threads, conversation search, and a clearly labeled simulated-reply button
-- Chat messages are stored locally in the browser by demo account name
+- Swipe Match tab: drag or swipe left to pass, right to like, keyboard arrow controls, details modal; likes automatically save profiles.
+- Boston neighborhood and school filters: Fenway, Allston, Brookline, Back Bay, Mission Hill, Symphony; Northeastern, BU, BC, Berklee and Emerson.
+- Korean and English UI with a toggle on the login screen and in the app.
+- My Profile: upload photo (JPG/PNG/WebP, <=5 MB), name, school, preferred area and bio; save changes locally.
+- Existing compatibility scores, must-have preferences, saved matches, introductory messages and simulated direct messages.
 
-## Try it
+## Demo limitations
 
-1. Open the prototype and enter a demo name.
-2. Choose a roommate and click **소개 메시지 작성**.
-3. Edit the introduction, then click **메시지 보내고 대화 시작하기**.
-4. Chat in the **메시지** tab. Use **예시 답장 받기** to test a simulated reply.
-
-## Important
-
-This is a frontend-only classroom MVP. There is **no login backend or real person-to-person messaging**. Chats are not transmitted to other browsers, devices, or users. All profiles, housing details, commute times, scores, and photos are illustrative.
+All users, images, neighborhood/location associations, commute times, match scores and schools are illustrative. No identity validation, actual housing listings, server-backed login or real message delivery. Account details, photo and chat messages are stored in the current browser only. Do not enter sensitive personal details into this prototype.
