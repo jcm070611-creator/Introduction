@@ -1,0 +1,66 @@
+
+/* RoomMatch Boston V6 — inspired by broad, clean mobile sign-in layouts; independent branding. */
+.ob-form-card:has(.auth-first-step:not(.hidden)) {
+ background:#2858a5;color:#fff;border:1px solid #2858a5;
+ box-shadow:0 25px 60px rgba(29,66,142,.23);
+}
+.ob-form-card:has(.auth-first-step:not(.hidden)) .ob-count {color:#d2e5ff;}
+.ob-form-card:has(.auth-first-step:not(.hidden)) .ob-error {color:#fff0aa;}
+.ob-form-card:has(.auth-first-step:not(.hidden)) .ob-prev {color:#fff;background:transparent;border-color:#9cbeef;}
+.ob-form-card:has(.auth-first-step:not(.hidden)) .ob-next{
+  color:white;background:#090d18;border-radius:999px;width:100%;font-size:18px;
+  padding:16px 22px;box-shadow:0 10px 22px #101c3880;letter-spacing:.25px;
+}
+.ob-form-card:has(.auth-first-step:not(.hidden)) .ob-actions {margin-top:22px;}
+.auth-first-step .auth-sparkle{color:#e6ecff;font-size:11px;font-weight:900;letter-spacing:1.5px;margin-top:23px;}
+.auth-first-step .auth-title{color:#fff;font-family:'Outfit','Pretendard',sans-serif;font-size:clamp(35px,3.1vw,51px);line-height:1.1;letter-spacing:-1.9px;margin:14px 0 10px;}
+.auth-first-step .auth-lead{color:#dbe7ff;line-height:1.7;font-size:13px;margin:0 0 24px;}
+.auth-switch{width:100%;display:flex;align-items:center;gap:0;background:#fff;border-radius:999px;padding:4px;margin-bottom:16px;min-height:58px;box-shadow:0 8px 18px #16346d2b;}
+.auth-switch button{flex:1;border:0;background:transparent;color:#1b2b48;font-size:18px;padding:12px 18px;border-radius:999px;letter-spacing:.1px;font-weight:650;transition:background .15s,color .15s;}
+.auth-switch button.active{background:#0a0d14;color:white;box-shadow:0 3px 8px #0413263d;}
+.auth-contact-area{min-height:76px;}
+.auth-contact-panel{display:flex;align-items:stretch;gap:10px;min-height:69px;}
+.auth-contact-panel.hidden{display:none!important;}
+.auth-contact-panel>label{position:relative;display:flex;flex-direction:column;justify-content:center;min-width:0;background:#fff;border:2px solid #cad9f0;border-radius:21px;color:#758296;font-size:11px;font-weight:800;padding:10px 14px 8px;}
+.auth-contact-panel>label:has(input){flex:1;}
+.auth-contact-panel>label.auth-contact-label{width:100%;}
+.auth-contact-panel input,.auth-contact-panel select{border:0;outline:0;background:transparent;color:#17243d;width:100%;font-size:18px;font-weight:650;min-width:0;margin-top:2px;}
+.auth-contact-panel .auth-phone-code{width:126px;flex:none;}
+.auth-contact-panel .auth-phone-code select{font-size:16px;}
+.auth-contact-panel input::placeholder{color:#9ba4b4;font-weight:500;}
+.auth-contact-panel>label:focus-within{border-color:#8cc1ff;box-shadow:0 0 0 3px #e0f0ff66;}
+.auth-contact-note{font-size:11px;color:#dceaff;line-height:1.65;margin:4px 0 23px;}
+.auth-personal-details{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+.auth-personal-details label{display:flex;flex-direction:column;color:#e8efff;font-size:12px;gap:7px;font-weight:800;}
+.auth-personal-details input,.auth-personal-details select{background:#fff;border-radius:15px;border:2px solid #d2e0f2;width:100%;padding:13px 11px;min-width:0;font-size:13px;color:#203350;outline:none;}
+.auth-personal-details input:focus,.auth-personal-details select:focus{border-color:#8cc1ff;}
+.auth-social-section{margin-top:26px;text-align:center;display:flex;flex-direction:column;align-items:center;}
+.auth-social-section>span{font-size:14px;color:#f1f6ff;}
+.auth-social-buttons{display:flex;justify-content:center;gap:12px;margin:16px 0 8px;}
+.auth-social-btn{width:66px;height:63px;display:grid;place-items:center;border-radius:21px;border:0;background:#fff;color:#000;box-shadow:0 8px 16px #11275625;transition:transform .15s;}
+.auth-social-btn:hover{transform:translateY(-3px)}
+.google-g{font-family:Arial,sans-serif;font-size:39px;font-weight:800;background:conic-gradient(#4285f4 0 95deg,#34a853 95deg 175deg,#fbbc05 175deg 235deg,#ea4335 235deg 315deg,#4285f4 315deg);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.apple-brand{font-size:16px;font-weight:900;letter-spacing:-.8px;}
+.fb-f{font-family:Arial,sans-serif;font-size:39px;font-weight:900;color:#1877f2;}
+.auth-social-section small{color:#d7e2fa;font-size:10px;}
+.auth-terms{color:#e9f1ff;font-size:10px;line-height:1.65;margin:21px 0 0;opacity:.86;}
+/* Browse list expansion indicators */
+.feed-controls{display:flex;align-items:center;flex-direction:column;gap:8px;padding:30px 10px 50px;text-align:center;}
+.feed-controls p{margin:0;color:#67809b;font-size:12px;font-weight:750;}
+.feed-more{border:1px solid #b9d0f3;color:#2459c8;background:#fff;border-radius:999px;padding:13px 25px;font-weight:850;box-shadow:0 10px 22px #19488a16;}
+.feed-more[hidden]{display:none!important;}
+#feed-trigger{height:1px;width:100%;}
+/* Slightly more room for candidate discovery on large screens */
+@media (min-width:1150px){ #cards.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;} #cards .profile-photo{min-height:180px;} }
+@media(max-width:900px){.auth-first-step .auth-title{font-size:38px;}}
+@media(max-width:560px){
+ .ob-form-card:has(.auth-first-step:not(.hidden)){border-radius:27px;padding:25px 18px;}
+ .auth-first-step .auth-title{font-size:34px;}
+ .auth-switch button{font-size:16px;}
+ .auth-contact-panel .auth-phone-code{width:105px;}
+ .auth-contact-panel input,.auth-contact-panel select{font-size:15px;}
+ .auth-personal-details{grid-template-columns:1fr;gap:11px;}
+ .auth-social-btn{width:65px;height:62px;}
+}
+
+

@@ -1,51 +1,48 @@
-# RoomMatch Boston
+# RoomMatch Boston — Latest Prototype (V8)
 
-Bilingual roommate matching prototype for Boston university students.
+RoomMatch Boston is an interactive student roommate-matching prototype. This folder contains **the newest version**.
 
-## Run
+## View the website
 
-From the repository root, run `python3 -m http.server 8000`, then open `http://localhost:8000/roommatch-boston/`. The project uses HTML, CSS, and JavaScript with no build step.
+- Visit the deployed website if GitHub Pages has been enabled, or download this folder and open `index.html` in a browser.
+- No build tools or installations are required.
+- To enable GitHub Pages, go to repository **Settings → Pages**, then deploy the `main` branch from `/(root)`. The resulting site path is `/Introduction/roommatch-boston/`.
 
-## Structure
+## Features
+
+- Soft pastel pink / blue landing page and sign-in/sign-up experience
+- Email or mobile sign-in and separate sign-up form
+- Four-step onboarding: university, contact details, identity-upload UI, preferences, photo and bio
+- Form validation with inline feedback, `Other` values for university and neighborhoods
+- 72 sample roommate profiles with progressive loading
+- Swipe matchmaking, compatibility scores, area/school filters, saved profiles
+- Mutual-match gates for private profile details
+- Browser-only chat simulation: responses, typing states, receipts and presence indicators
+- Korean / English interface, editable personal profile, first-time guidance
+
+## Source structure
 
 ```
 roommatch-boston/
-├── index.html                  # Landing page, signup, dashboard
-├── README.md                   # Team documentation
-└── assets/
-    ├── css/
-    │   ├── styles.css         # App UI, profile cards, swipe and chat
-    │   └── onboarding.css     # Landing, registration and matching UI
-    ├── js/
-    │   ├── profiles.js        # 12 roommate profiles and image paths
-    │   ├── app.js             # Score calculations, filters, swipe, language
-    │   ├── experience.js      # Mutual matches, privacy gates, chat replies
-    │   └── onboarding.js      # Required 4-step registration
-    └── images/
-        └── roommate-01.jpg ... roommate-12.jpg
+  index.html
+  README.md
+  assets/
+    css/
+      styles.css
+      onboarding.css
+      auth-feed.css
+      auth-improvements.css
+    js/
+      profiles.js
+      app.js
+      experience.js
+      onboarding.js
+      feed.js
+      auth.js
+    images/
+      roommate-01.jpg ... roommate-28.jpg
 ```
 
-## What to test
+## Prototype safety and limitations
 
-1. Enter through the marketing landing page and complete all registration steps: university/name/email/phone, ID and selfie selection, budget/lifestyle, and profile bio/photo.
-2. Explore 12 profiles, browse by neighborhood and school, or swipe. Like a candidate to request a match.
-3. A subset reciprocates. Detailed rent, commuting, lifestyle rows and activity indicators unlock only after reciprocal interest.
-4. Send an introductory message, see typing and read receipts, and receive context-sensitive automatic replies. Try Korean / English.
-5. Update your profile, preferences and saved candidates.
-
-## Editing guide
-
-- Profiles: `assets/js/profiles.js`
-- Portraits: `assets/images/`
-- Base scoring and UI: `assets/js/app.js`
-- Match gates and messages: `assets/js/experience.js`
-- Signup and language: `assets/js/onboarding.js`
-- Styles: `assets/css/`
-
-Use Git branches and pull requests. Do not duplicate old project files; rely on Git commit history.
-
-## Important — prototype limits
-
-This is not a production site. The 12 profiles and AI-generated portraits are fictional examples. **No actual identity verification or facial comparison occurs.** ID and selfie images are displayed locally only, are not uploaded, and are not retained. Do not upload real identity documents for testing. Email and phone are entered in the UI but are not verified or sent. Profile preferences and messages are browser-local.
-
-**No real AI service or live person is connected.** Mutual matches, online state, read receipts, typing and contextual automatic replies are locally simulated. Detailed profile restrictions are UI-only, not secure server authorization. A real launch would require secure authentication, a privacy-reviewed identity verification provider, database, real-time messages, access control, moderation, consent and secure retention policies.
+The 72 profiles and 28 avatar images are **illustrative AI-generated examples**. Account and identity verification, social sign-in, server-side AI, real-time status, receipts and message delivery are not live services; these are browser-only interactions. Do **not** provide real IDs, passwords or sensitive data. Some settings and sign-in demonstrations use local browser state, which is not shared with other users or devices. Opening or refreshing the website starts from the sign-in screen.

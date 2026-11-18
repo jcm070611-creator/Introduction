@@ -1,3 +1,4 @@
+
 'use strict';
 const defaults = { budget: 1500, commute: 25, sunlight: 'bright', security: 'secure', sleep: 'balanced', clean: 'tidy', noise: 'quiet', guests: 'rare', mustSmoke: true, mustBathroom: false, mustCommute: true, mustSecure: false, mustSunlight: false, mustBudget: true };
 const keys = Object.keys(defaults);
@@ -50,13 +51,20 @@ function compatibility(p) {
 }
 function sorted(arr) { const q = $('search').value.trim().toLowerCase(), only = $('eligible-only').checked, mode = $('sort').value; const list = arr.filter(p => (currentArea === 'all' || p.area === currentArea) && (currentSchool === 'all' || p.school === currentSchool) && (p.name + ' ' + p.school + ' ' + p.area).toLowerCase().includes(q) && (!only || compatibility(p).eligible)); list.sort((a, b) => mode === 'budget' ? a.rent - b.rent : mode === 'commute' ? a.commute - b.commute : Number(compatibility(b).eligible) - Number(compatibility(a).eligible) || compatibility(b).score - compatibility(a).score); return list; }
 function personCard(p) { const c = compatibility(p), good = c.rows.filter(x => x.ok).slice(0, 3).map(x => x.name); return `<article class="person-card"><div class="profile-photo" style="background:${p.color}"><img src="${profilePhotos[p.id]}" alt="${p.name} 프로필 사진" loading="lazy" decoding="async" /><button class="save-btn ${saved.has(p.id) ? 'saved' : ''}" data-save="${p.id}" aria-label="${p.name} 저장 토글">${saved.has(p.id) ? '♥ 저장됨' : '♡ 저장'}</button><span class="match-badge ${c.eligible ? '' : 'warn'}">${c.score}% ${c.eligible ? 'MATCH' : '주의'}</span></div><div class="person-top"><h3>${p.name} <span class="age">${p.age}세</span></h3><span class="verified">● </span></div><p class="pmeta">🎓 ${escapeHtml(p.school)}<br>📍 ${p.area} · 통학 ${p.commute}분 (예시)</p><div class="tags">${good.map(x => `<span class="tag">✓ ${x}</span>`).join('')}${c.blockers.length ? `<span class="tag bad">⚠ ${c.blockers[0]}</span>` : ''}</div><div class="pbottom"><span class="rent">$${p.rent.toLocaleString()} <small>/월</small></span><button class="view" data-open="${p.id}">궁합 보기 →</button></div></article>`; }
+let feedShown = 12;
+let lastFeedFilter = '';
 function render() {
     const ordered = sorted(profiles), eligible = profiles.filter(p => compatibility(p).eligible), top = sorted(profiles).length ? [...sorted(profiles)] : [...profiles].sort((a, b) => Number(compatibility(b).eligible) - Number(compatibility(a).eligible) || compatibility(b).score - compatibility(a).score).slice(0, 3);
     $('stat-total').textContent = profiles.length;
     $('stat-eligible').textContent = eligible.length;
     $('stat-best').textContent = Math.max(...profiles.map(p => compatibility(p).score)) + '%';
     $('result-count').textContent = `(${ordered.length}명)`;
-    $('cards').innerHTML = ordered.length ? ordered.map(personCard).join('') : `<div class="no-results"><h3>이 조건에 맞는 후보가 없어요</h3><p>검색어를 바꾸거나 필수 조건을 조정해보세요.</p><button class="outline" data-page="preferences">조건 수정하기</button></div>`;
+    const filterKey = JSON.stringify([currentArea,currentSchool,$('search').value,$('sort').value,$('eligible-only').checked,JSON.stringify(prefs)]);
+    if(filterKey !== lastFeedFilter) { feedShown=12; lastFeedFilter=filterKey; }
+    const feed=ordered.slice(0,feedShown);
+    $('feed-more').hidden = feed.length >= ordered.length;
+    $('feed-progress').textContent = `${feed.length} / ${ordered.length}명 · ${currentLang==='en'?'profiles loaded':'프로필 표시 중'}`;
+    $('cards').innerHTML = ordered.length ? feed.map(personCard).join('') : `<div class="no-results"><h3>이 조건에 맞는 후보가 없어요</h3><p>검색어를 바꾸거나 필수 조건을 조정해보세요.</p><button class="outline" data-page="preferences">조건 수정하기</button></div>`;
     $('recommended').innerHTML = top.map(p => `<div class="rec-mini-card" role="button" tabindex="0" data-open="${p.id}"><div class="rec-mini-avatar"><img src="${profilePhotos[p.id]}" alt="${p.name} 예시 프로필" loading="lazy" /></div><div class="rec-mini-info"><b>${p.name}</b><small>${p.school.split(' ')[0]} · ${p.area}</small></div><span class="rec-score-pill">${compatibility(p).score}%</span></div>`).join('');
     $('saved-nav-count').textContent = saved.size;
     $('saved-top-count').textContent = saved.size;
@@ -240,8 +248,8 @@ $('modal-bg').addEventListener('click', e => { if (e.target.id === 'modal-bg')
 fillPrefs();
 render();
 // ===== RoomMatch Boston v4: location/school filters, swipe deck, account & bilingual UI =====
-const AREAS = ['all', 'Fenway', 'Allston', 'Brookline', 'Back Bay', 'Mission Hill', 'Symphony'];
-const SCHOOLS = ['all', 'Northeastern University', 'Boston University', 'Boston College', 'Berklee College of Music', 'Emerson College'];
+const AREAS = ['all', 'Fenway', 'Allston', 'Brookline', 'Back Bay', 'Mission Hill', 'Symphony', 'Brighton', 'Cambridge', 'Longwood', 'Jamaica Plain'];
+const SCHOOLS = ['all', 'Northeastern University', 'Boston University', 'Boston College', 'Berklee College of Music', 'Emerson College', 'Harvard University', 'Tufts University'];
 function flabel(v) { return v === 'all' ? '전체' : v; }
 function optHtml(values) { return values.map(v => `<option value="${escapeHtml(v)}">${v === 'all' ? '전체' : escapeHtml(v)}</option>`).join(''); }
 function renderFilters() {
@@ -260,7 +268,12 @@ function selectArea(v) { if (!AREAS.includes(v))
     return; currentArea = v; swiped.clear(); swipeLiked.clear(); swipePassed.clear(); renderFilters(); render(); renderSwipe(); translateUI(); }
 function selectSchool(v) { if (!SCHOOLS.includes(v))
     return; currentSchool = v; swiped.clear(); swipeLiked.clear(); swipePassed.clear(); renderFilters(); render(); renderSwipe(); translateUI(); }
-function swipeCandidates() { return sorted(profiles).filter(p => !swiped.has(p.id)); }
+function swipeCandidates() {
+    const pool=sorted(profiles);
+    // After viewing all 72, start a fresh pass. Previously liked candidates remain saved.
+    if(pool.length && pool.every(p=>swiped.has(p.id))) { swiped.clear();swipePassed.clear(); }
+    return pool.filter(p=>!swiped.has(p.id));
+}
 let dragOriginX = null, dragDelta = 0, dragPointer = null;
 function renderSwipe() {
     const stack = swipeCandidates(), p = stack[0];
@@ -495,3 +508,5 @@ document.addEventListener('keydown', e => { if (page !== 'swipe' || $('modal-bg'
 } });
 renderFilters();
 translateUI();
+
+

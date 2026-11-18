@@ -1,7 +1,8 @@
+
 'use strict';
 // RoomMatch Boston: discover, mutual-matching and conversation experience.
 // All state below is local to the visitor's browser. No networking is performed.
-const RECIPROCAL_IDS = new Set([1, 3, 4, 6, 7, 9, 10, 12]);
+const RECIPROCAL_IDS = new Set([1, 3, 4, 6, 7, 9, 10, 12, ...profiles.filter(p=>p.id>12&&p.id%4===1).map(p=>p.id)]);
 const MUTUAL_STORE = 'rmb_mutual_v5';
 const LIKED_STORE = 'rmb_sent_likes_v5';
 function restoreIds(key) { try { const ids = JSON.parse(localStorage.getItem(key) || '[]'); return new Set(Array.isArray(ids) ? ids.filter(id => profiles.some(p=>p.id===id)) : []); } catch { return new Set(); } }
@@ -101,7 +102,7 @@ renderMessages=function(){
  return `${sep}<div class="chat-row ${m.from==='me'?'mine':'theirs'}">${m.from==='them'?`<img class="chat-avatar" src="${profilePhotos[p.id]}" alt="">`:''}<div class="chat-bubble-wrap"><div class="chat-bubble" data-no-translate>${escapeHtml(m.text)}</div><span class="chat-timestamp ${m.readByThem?'read':''}">${chatTime(m.ts)}${m.from==='me'?(m.readByThem?' · 읽음':' · 전송됨'):''}</span></div></div>`;}).join('');
  const writing=replyBusy.has(activeChatId)?`<div class="typing-status">${escapeHtml(p.name)}님이 작성 중입니다 <span class="typing-dots"><i></i><i></i><i></i></span></div>`:'';
  $('chat-room').innerHTML=`<div class="chat-room-header"><img class="chat-avatar" src="${profilePhotos[p.id]}" alt=""><div class="chat-contact"><b>${escapeHtml(p.name)} <span class="verified">💞 매칭됨</span></b><small>${onlineInfo(p.id)} · ${escapeHtml(p.school)}</small></div><button class="chat-header-action" data-open="${p.id}">상세 프로필 ↗</button></div><div class="chat-messages" id="chat-message-list" role="log" aria-live="polite">${bubbles}${writing}</div><div class="chat-compose-bar"><div class="chat-compose-wrap"><textarea id="chat-compose" class="chat-compose" rows="2" maxlength="750" placeholder="메시지를 입력하세요..." aria-label="메시지 입력"></textarea><button id="send-chat" class="chat-send">보내기 ↑</button></div><div class="chat-compose-hint"><span>Enter 전송 · Shift + Enter 줄바꿈</span></div></div>`;
- const sc=$('chat-message-list');if(sc)sc.scrollTop=sc.scrollHeight;
+ const sc=$('chat-message-list');if(sc)sc.scrollTop=sc.scrollHeight;translateUI();
 };
 // A right swipe checks for a reciprocal match. A left swipe simply skips.
 swipeDecision=function(action){const p=swipeCandidates()[0];if(!p)return;swiped.add(p.id);if(action==='like'){swipeLiked.add(p.id);likeCandidate(p.id);}else{swipePassed.add(p.id);toast('다음 룸메이트를 볼게요.');}renderSwipe();};
@@ -114,6 +115,21 @@ const contactTarget=document.querySelector('.account-editor');
 if(contactTarget){const el=document.createElement('div');el.id='account-contact-fields';el.className='account-contact-meta';contactTarget.appendChild(el);}
 render();
 
-Object.assign(TRANSLATIONS,{'관심 보내기':'Send like','관심 보냄':'Like sent','매칭 완료':'Matched','서로 매칭':'Mutual match','매칭됨':'Matched','프로필 보기':'View profile','상세 보기':'View details','현재 활동 중':'Online now','최근 활동':'Recently active','작성 중입니다':'is typing','읽음':'Read','전송됨':'Sent','생활 패턴 자세히 비교':'Compare lifestyle details','대화 이어가기':'Continue chat','관심 보내고 매칭하기':'Like to match','메시지를 입력하세요...':'Write a message...','가입 연락처':'Contact information'});
-TRANS_KEYS.push(...Object.keys(TRANSLATIONS).filter(x=>!TRANS_KEYS.includes(x)));
+// Extend Korean/English support for newly introduced match and chat labels.
+Object.assign(TRANSLATIONS, {
+ '관심 보내기':'Send like','관심 보냄':'Like sent','매칭 완료':'Matched','서로 매칭':'Mutual match','매칭됨':'Matched',
+ '프로필 보기':'View profile','상세 보기':'View details','메시지 보내기':'Send message','소개 메시지 작성':'Write introduction',
+ '상세 프로필':'Full profile','현재 활동 중':'Online now','최근 활동':'Recently active','작성 중입니다':'is typing',
+ '읽음':'Read','전송됨':'Sent','활동 중':'Online','상호 매칭 후 상세 정보 공개':'Full details unlock after matching',
+ '정확한 예산, 통학 시간, 생활 습관 세부 정보와 활동 상태는 서로 관심을 표시한 후 확인할 수 있어요.':'Exact rent, commute, lifestyle details, and activity status unlock after a mutual match.',
+ '매칭 점수는 등록한 선호도에 따라 계산됩니다.':'Compatibility is based on your preferences.',
+ '생활 패턴 자세히 비교':'Compare lifestyle details','대화 이어가기':'Continue chat','관심 보내고 매칭하기':'Like to match',
+ '메시지를 입력하세요...':'Write a message...','새로운 대화를 시작해 보세요':'Start a new conversation',
+ '상호 매칭된 상대와 첫 인사를 나누면 여기에 대화가 표시됩니다.':'Your conversations with mutual matches will appear here.',
+ '서로 관심을 보낸 후 메시지를 주고받을 수 있어요.':'You can message each other after a mutual match.',
+ '대화 목록':'Conversations','가입 연락처':'Contact information','다른 룸메이트에게 공개되지 않습니다.':'Hidden from other roommates.'
+});
+TRANS_KEYS.push(...Object.keys(TRANSLATIONS).filter(key=>!TRANS_KEYS.includes(key)));
 TRANS_KEYS.sort((a,b)=>b.length-a.length);
+
+
