@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RoomMatch Boston — 보스턴 유학생 룸메이트 매칭</title>
+<meta name="description" content="RoomMatch Boston Korean student roommate matching interactive prototype." />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+:root { --ink:#172a28; --muted:#74837f; --teal:#096a62; --mint:#dff3ea; --bg:#f8faf7; --line:#e7ede8; --orange:#ffb86b; --white:#fff; --shadow:0 12px 42px rgba(31,65,50,.055); }
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:'DM Sans',Arial,sans-serif;color:var(--ink)}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
+.app{min-height:100vh;display:flex}.sidebar{width:238px;flex:none;background:#fff;border-right:1px solid var(--line);padding:30px 20px 22px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:10}.logo{font-family:Outfit,sans-serif;display:flex;align-items:center;gap:10px;font-size:23px;font-weight:800;letter-spacing:-1.2px;margin:0 6px 43px}.logo-mark{background:#136e62;color:white;border-radius:13px;width:39px;height:39px;display:grid;place-items:center;font-size:23px;transform:rotate(-6deg)}.logo-mark span{transform:rotate(6deg)}.side-label{text-transform:uppercase;font-size:10px;color:#a4b0a8;letter-spacing:2px;font-weight:800;padding:0 17px;margin-bottom:12px}.nav{display:grid;gap:7px}.nav button{display:flex;align-items:center;gap:12px;width:100%;border:0;background:transparent;color:#72827d;padding:13px 17px;text-align:left;font-weight:700;border-radius:12px}.nav button.active{background:#e5f4ee;color:var(--teal)}.nav button:hover:not(.active){background:#f4f7f4}.nav .emoji{font-size:18px}.nav .count{margin-left:auto;border-radius:20px;background:#e1efea;padding:3px 8px;font-size:11px}.sidebar-bottom{margin-top:auto}.tip-card{background:#f4f8ec;border:1px solid #e9efdc;border-radius:17px;padding:17px 15px;margin-bottom:18px}.tip-icon{font-size:24px}.tip-card b{display:block;font-family:Outfit;margin:10px 0 5px;font-size:15px}.tip-card p{margin:0;color:#859081;font-size:12px;line-height:1.6}.user{display:flex;align-items:center;gap:10px;padding:15px 6px 0;border-top:1px solid var(--line)}.user-bubble{background:#e4e7fc;color:#5a568c;border-radius:13px;width:38px;height:38px;display:grid;place-items:center;font-weight:800}.user b{font-size:13px}.user small{display:block;color:#a0aaa4;font-size:11px;padding-top:2px}.content{max-width:1570px;width:100%;padding:28px 42px 54px;margin:0 auto;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:26px}.crumb{color:#96a49c;font-weight:700;font-size:13px}.crumb span{color:var(--ink)}.top-actions{display:flex;align-items:center;gap:12px}.city{font-size:13px;color:#5b746b;font-weight:700;background:white;border:1px solid var(--line);padding:10px 13px;border-radius:10px}.mini-badge{border-radius:10px;padding:9px 11px;background:#eaf6ec;color:#25745c;font-size:11px;font-weight:800}.hero{background:#dff3ea;border-radius:24px;display:flex;min-height:205px;overflow:hidden;position:relative;box-shadow:var(--shadow);margin-bottom:29px}.hero-copy{padding:30px 36px;z-index:2;max-width:720px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:2.5px;color:#418c79;font-weight:800}.hero h1{font-family:Outfit,sans-serif;margin:10px 0 10px;font-size:36px;letter-spacing:-1.7px;line-height:1.1}.hero p{max-width:520px;font-size:14px;color:#637d72;line-height:1.65;margin:0}.hero-graphic{margin-left:auto;min-width:285px;position:relative}.shape-a{position:absolute;right:80px;top:32px;width:170px;height:170px;background:#ffcf99;border-radius:55px 80px 50px 80px;transform:rotate(-14deg)}.shape-b{position:absolute;right:40px;top:55px;width:119px;height:119px;background:#e8ae83;border:10px solid #fff9ec;border-radius:100px 100px 25px 25px;transform:rotate(14deg)}.window{position:absolute;right:125px;top:60px;width:80px;height:85px;border:7px solid #427f75;border-radius:50px 50px 6px 6px;background:#fff7d9}.window:after{content:'';position:absolute;height:69px;width:6px;background:#427f75;left:31px}.star{position:absolute;right:62px;top:22px;color:#499f80;font-size:36px}.subrow{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 16px}.heading{font-family:Outfit,sans-serif;letter-spacing:-.5px;font-size:23px;margin:0}.tiny-sub{color:var(--muted);font-size:13px;margin-top:4px}.linkish{border:0;background:transparent;color:#087166;font-weight:800;font-size:13px}.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-bottom:30px}.summary-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:17px 19px;display:flex;align-items:center;gap:13px;min-width:0}.summary-icon{width:43px;height:43px;border-radius:13px;background:#eff5e7;display:grid;place-items:center;font-size:21px;flex:none}.summary-icon.peach{background:#fff1e3}.summary-icon.lilac{background:#f0eaff}.summary-card b{font-family:Outfit;font-size:20px;display:block;letter-spacing:-.5px}.summary-card small{font-size:11px;color:#8c9a90}.discover-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:16px;gap:12px}.controls{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.search{min-width:200px;border:1px solid var(--line);background:white;border-radius:11px;padding:11px 12px;color:var(--ink);font-size:12px;outline:none}.search:focus,.field select:focus,.field input:focus{border-color:#65aa9a}.sort{border:1px solid var(--line);background:white;border-radius:11px;padding:11px 12px;color:#627870;font-size:12px;font-weight:700;outline:none}.pill-toggle{display:flex;align-items:center;gap:7px;color:#677c71;font-size:12px;font-weight:700;cursor:pointer}.pill-toggle input{accent-color:#0b7668}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}.person-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:15px;position:relative;min-width:0;transition:transform .16s,box-shadow .16s;box-shadow:var(--shadow)}.person-card:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(38,67,54,.12)}.person-card.ineligible{opacity:.76}.photo{height:147px;border-radius:14px;position:relative;overflow:hidden;background:var(--avatar);display:flex;align-items:center;justify-content:center}.photo .portrait{position:relative;display:grid;place-items:center;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.39);font-family:Outfit;font-size:41px;font-weight:700;color:rgba(35,79,66,.8);box-shadow:0 12px 50px #627e7717}.photo .deco{position:absolute;width:100px;height:100px;border:14px solid rgba(255,255,255,.24);border-radius:50%;left:-23px;top:-33px}.photo .deco2{position:absolute;width:75px;height:75px;border:13px solid rgba(255,255,255,.22);border-radius:50%;right:-20px;bottom:-25px}.match-badge{position:absolute;right:12px;top:12px;background:#fff;border-radius:10px;padding:6px 9px;color:#106d61;font-family:Outfit;font-size:13px;font-weight:800;box-shadow:0 4px 16px #506b601a}.match-badge.warn{color:#b26942}.save{position:absolute;top:13px;left:13px;background:rgba(255,255,255,.91);width:32px;height:32px;border:0;border-radius:10px;display:grid;place-items:center;color:#5a736a;font-size:20px}.save.saved{color:#e07c7a;background:#fff}.person-top{display:flex;align-items:start;justify-content:space-between;margin:16px 1px 7px;gap:5px}.person-top h3{font-family:Outfit;font-size:19px;letter-spacing:-.55px;margin:0}.person-top .age{font-size:12px;color:#9aaba1;font-family:'DM Sans';font-weight:700}.verified{font-size:10px;color:#247e68;background:#eaf5ec;padding:5px 6px;border-radius:6px;font-weight:800;white-space:nowrap}.person-meta{font-size:12px;color:#7d8f85;margin:0 0 14px}.person-attributes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;min-height:51px;align-content:start}.chip{background:#f4f7f5;padding:6px 9px;color:#597469;font-size:10px;border-radius:7px;font-weight:700}.chip.bad{background:#fff1ec;color:#b76e4a}.person-bottom{border-top:1px solid #eef2ee;padding-top:13px;display:flex;align-items:center;justify-content:space-between}.price{font-family:Outfit;font-size:20px;font-weight:800;letter-spacing:-.5px}.per{font-size:11px;color:#9aa9a0;font-weight:500}.profile-btn{border:0;border-radius:10px;background:#0f7465;color:#fff;font-size:12px;font-weight:800;padding:10px 13px}.profile-btn:hover,.primary:hover{background:#095448}.no-results{grid-column:1/-1;text-align:center;background:white;border:1px dashed #cad9d0;padding:60px 20px;border-radius:20px;color:var(--muted)}.no-results h3{color:var(--ink)}.bottom-note{color:#99a69d;text-align:center;font-size:11px;margin-top:26px;line-height:1.6}
+.pref-hero{display:flex;justify-content:space-between;align-items:center;background:#e2f4ed;border:1px solid #d4eadd;border-radius:20px;padding:24px;margin-bottom:22px;gap:20px}.pref-hero h1,.saved-hero h1{margin:0 0 5px;font-size:29px;font-family:Outfit;letter-spacing:-1px}.pref-hero p,.saved-hero p{margin:0;color:#6e877d;font-size:13px;line-height:1.6}.pref-panel{background:white;border:1px solid var(--line);padding:25px;border-radius:19px;margin-bottom:17px}.panel-title{font-family:Outfit;font-size:19px;font-weight:800;margin:0 0 7px}.panel-info{color:#88988d;font-size:12px;margin:0 0 24px;line-height:1.6}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:21px}.field{min-width:0}.field>label{font-size:12px;color:#3e5950;font-weight:800;display:block;margin-bottom:9px}.field select,.field input[type=number]{width:100%;min-height:42px;padding:10px 11px;border:1px solid var(--line);background:#fbfdfb;border-radius:10px;outline:0;color:#285046;font-size:13px}.field .help{font-size:11px;color:#96a69a;margin-top:6px}.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.checkcard{display:flex;align-items:center;gap:10px;padding:14px;border:1px solid #e9efea;border-radius:12px;cursor:pointer;color:#4e6a5e;font-size:12px;font-weight:700}.checkcard input{accent-color:#127b69}.actions-row{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:20px 0}.primary{background:#0f7465;color:#fff;border:0;border-radius:11px;font-size:13px;font-weight:800;padding:13px 19px}.secondary{background:#fff;color:#397766;border:1px solid #d4e7dd;border-radius:11px;font-size:13px;font-weight:800;padding:12px 18px}.saved-hero{padding-bottom:30px}.empty-saved{text-align:center;background:white;border:1px dashed #ccdacf;padding:70px 20px;border-radius:20px}.empty-saved .big{font-size:40px}.empty-saved p{color:#8d9f92;font-size:13px;max-width:400px;margin:10px auto 20px}.modal-bg{position:fixed;inset:0;background:rgba(20,46,39,.53);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}.modal-bg.open{display:flex}.modal{max-height:90vh;overflow:auto;max-width:660px;width:100%;border-radius:23px;background:white;padding:27px;box-shadow:0 20px 70px #122c2860}.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.close{background:#f4f8f5;border:0;border-radius:9px;width:34px;height:34px;color:#577568;font-size:21px}.modal-person{display:flex;align-items:center;gap:15px;margin-bottom:22px}.modal-avatar{width:66px;height:66px;background:var(--avatar);border-radius:16px;display:grid;place-items:center;color:#49695f;font-family:Outfit;font-size:27px;font-weight:800}.modal-person h2{font-family:Outfit;margin:0 0 4px;font-size:24px;letter-spacing:-.5px}.modal-person small{color:var(--muted)}.modal-score{display:flex;gap:18px;align-items:center;background:#eaf7ee;border-radius:15px;padding:17px 19px;margin:0 0 21px}.modal-score strong{font-family:Outfit;font-size:30px;color:#147264}.modal-score .score-desc{font-size:12px;color:#668878;line-height:1.5}.modal-score.bad{background:#fff2eb}.modal-score.bad strong{color:#b66843}.modal h3{font-family:Outfit;font-size:17px;margin:20px 0 11px}.compare{display:grid;gap:8px}.compare-row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:center;border:1px solid #e9eeea;border-radius:10px;padding:11px 12px;font-size:12px}.compare-row small{font-size:10px;color:#9baca0;display:block;margin-bottom:3px}.compare-row b{font-weight:800;color:#456a5c}.compare-row .status{font-size:16px}.modal-foot{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap;margin-top:22px}.draft{background:#f6f9f5;border:1px solid #e7ece5;padding:15px;border-radius:12px;margin-top:15px}.draft textarea{width:100%;height:100px;border:1px solid #dbe6de;border-radius:9px;resize:vertical;padding:11px;font-size:12px;line-height:1.6;color:#3e554c;outline:0}.toast{position:fixed;right:22px;bottom:22px;background:#173c33;color:white;padding:13px 17px;border-radius:12px;font-size:12px;font-weight:700;z-index:120;opacity:0;transform:translateY(14px);pointer-events:none;transition:all .2s}.toast.show{opacity:1;transform:translateY(0)}.hidden{display:none!important}.footer-p{font-size:11px;color:#94a39b;margin:8px 0 0}
+@media(max-width:1200px){.content{padding:24px 27px 40px}.sidebar{width:205px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{font-size:31px}.summary-card{padding:13px}.hero-graphic{min-width:210px}}@media(max-width:760px){.app{display:block}.sidebar{position:relative;width:100%;height:auto;padding:15px 17px;display:block;border-bottom:1px solid var(--line);border-right:0}.logo{margin:0 0 12px;font-size:20px}.side-label,.sidebar-bottom{display:none}.nav{display:flex;gap:7px}.nav button{padding:11px;justify-content:center;gap:6px;font-size:12px}.nav .count{display:none}.content{padding:18px 17px 36px}.hero{min-height:175px}.hero-copy{padding:24px 22px}.hero h1{font-size:27px;max-width:280px}.hero-graphic{display:none}.topbar{margin-bottom:18px}.city{font-size:11px}.summary{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.summary-card{padding:11px;flex-direction:column;text-align:center;gap:6px}.summary-icon{width:31px;height:31px;font-size:16px}.summary-card b{font-size:18px}.summary-card small{font-size:10px}.discover-head{display:block}.controls{margin-top:14px}.search{flex:1;min-width:120px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.person-card{padding:9px;border-radius:15px}.photo{height:107px}.photo .portrait{width:65px;height:65px;font-size:29px}.person-top h3{font-size:16px}.person-meta{font-size:10px}.person-attributes{min-height:62px}.chip{font-size:9px;padding:5px}.price{font-size:16px}.profile-btn{font-size:10px;padding:9px}.verified{font-size:9px}.fields,.checks{grid-template-columns:1fr}.pref-hero{padding:19px}.pref-panel{padding:17px}.compare-row{font-size:11px;grid-template-columns:1fr 1fr 18px}.modal{padding:18px}}@media(max-width:420px){.grid{grid-template-columns:1fr}.photo{height:165px}.person-attributes{min-height:auto}.hero h1{font-size:26px}.crumb{font-size:11px}}
+
+/* Original uploaded RoomMatch Boston visual palette and layout */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Pretendard:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --ink: #0f172a;
+  --muted: #64748b;
+  --blue: #1d4ed8;
+  --blue-dark: #1e3a8a;
+  --blue-soft: #eff6ff;
+  --red: #dc2626;
+  --red-soft: #fef2f2;
+  --bg: #f8fafc;
+  --line: #e2e8f0;
+  --white: #ffffff;
+  --shadow: 0 12px 36px rgba(15, 23, 42, 0.06);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  font-family: 'Pretendard', 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ink);
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+.hidden { display: none !important; }
+
+/* ==================== STEP 1: LOGIN SCREEN ==================== */
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px 36px;
+  background: radial-gradient(circle at 12% 15%, #eff6ff 0%, #f8fafc 48%, #fef2f2 100%);
+}
+.login-topbar {
+  max-width: 1120px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font-family: 'Outfit', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+.logo-mark {
+  background: linear-gradient(135deg, var(--red), var(--blue));
+  color: white;
+  border-radius: 13px;
+  width: 39px;
+  height: 39px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  box-shadow: 0 8px 20px rgba(29, 78, 216, 0.22);
+}
+.lang-switch {
+  display: inline-flex;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 3px;
+  gap: 3px;
+}
+.lang-switch button {
+  border: 0;
+  background: transparent;
+  padding: 6px 11px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+}
+.lang-switch button.active {
+  background: var(--blue);
+  color: #fff;
+}
+.login-main {
+  max-width: 1080px;
+  width: 100%;
+  margin: auto;
+  padding: 32px 0;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 44px;
+  align-items: center;
+}
+.login-pitch .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  border: 1px solid #bfdbfe;
+  padding: 6px 13px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+.login-pitch h1 {
+  font-family: 'Outfit', 'Pretendard', sans-serif;
+  font-size: 40px;
+  line-height: 1.18;
+  letter-spacing: -1.2px;
+  margin: 0 0 14px;
+}
+.login-pitch p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0 0 22px;
+}
+.uni-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.uni-tags span {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 7px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+}
+.login-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+}
+.login-card h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-family: 'Outfit', 'Pretendard', sans-serif;
+}
+.login-card p {
+  margin: 0 0 20px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.login-field {
+  margin-bottom: 15px;
+}
+.login-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: #334155;
+  margin-bottom: 6px;
+}
+.login-field input, .login-field select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #f8fafc;
+  font-size: 13px;
+  outline: none;
+}
+.login-field input:focus {
+  border-color: var(--blue);
+  background: #fff;
+}
+.btn-blue {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 13px 18px;
+  transition: background 0.15s;
+}
+.btn-blue:hover { background: var(--blue-dark); }
+.btn-red-blue {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--red), var(--blue));
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 13px 18px;
+  margin-top: 10px;
+}
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 700;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ==================== STEP 2 & 3: MAIN APP SHELL (SIDEBAR + CONTENT) ==================== */
+.app {
+  min-height: 100vh;
+  display: flex;
+}
+.sidebar {
+  width: 248px;
+  flex: none;
+  background: #fff;
+  border-right: 1px solid var(--line);
+  padding: 28px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 10;
+}
+.sidebar .logo {
+  margin: 0 8px 34px;
+}
+.side-label {
+  text-transform: uppercase;
+  font-size: 10px;
+  color: #94a3b8;
+  letter-spacing: 1.8px;
+  font-weight: 800;
+  padding: 0 14px;
+  margin-bottom: 10px;
+}
+.nav {
+  display: grid;
+  gap: 6px;
+}
+.nav button {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #475569;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 13px;
+  border-radius: 12px;
+  transition: all 0.15s;
+}
+.nav button.active {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+.nav button:hover:not(.active) {
+  background: #f1f5f9;
+}
+.nav .emoji { font-size: 17px; }
+.nav .count {
+  margin-left: auto;
+  border-radius: 20px;
+  background: var(--red-soft);
+  color: var(--red);
+  border: 1px solid #fecaca;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.sidebar-bottom { margin-top: auto; }
+.tip-card {
+  background: linear-gradient(145deg, #eff6ff, #fef2f2);
+  border: 1px solid #dbeafe;
+  border-radius: 16px;
+  padding: 15px 14px;
+  margin-bottom: 16px;
+}
+.tip-card b {
+  display: block;
+  margin: 6px 0 4px;
+  font-size: 13px;
+  color: var(--blue-dark);
+}
+.tip-card p {
+  margin: 0;
+  color: #475569;
+  font-size: 11px;
+  line-height: 1.55;
+}
+.user-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 14px 6px 0;
+  border-top: 1px solid var(--line);
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+.user-bubble {
+  background: linear-gradient(135deg, var(--blue), var(--red));
+  color: #fff;
+  border-radius: 12px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 13px;
+  flex: none;
+}
+.user-info b {
+  font-size: 12px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-info small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
+.logout-btn {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--muted);
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.logout-btn:hover {
+  color: var(--red);
+  border-color: #fecaca;
+}
+
+/* ==================== MAIN CONTENT AREA ==================== */
+.content {
+  max-width: 1480px;
+  width: 100%;
+  padding: 26px 38px 54px;
+  margin: 0 auto;
+  min-width: 0;
+}
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+.crumb {
+  color: #94a3b8;
+  font-weight: 700;
+  font-size: 13px;
+}
+.crumb span { color: var(--ink); }
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.city {
+  font-size: 12px;
+  color: var(--blue-dark);
+  font-weight: 700;
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+.cart-pill-btn {
+  border: 1px solid #fecaca;
+  background: var(--red-soft);
+  color: var(--red);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ==================== HERO BANNER ==================== */
+.hero {
+  background: linear-gradient(125deg, #1e3a8a 0%, #1d4ed8 58%, #dc2626 100%);
+  color: #fff;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 34px;
+  box-shadow: var(--shadow);
+  margin-bottom: 22px;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-copy { max-width: 680px; z-index: 2; }
+.eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #bfdbfe;
+  font-weight: 800;
+}
+.hero h1 {
+  font-family: 'Outfit', 'Pretendard', sans-serif;
+  margin: 8px 0 10px;
+  font-size: 32px;
+  letter-spacing: -1px;
+  line-height: 1.18;
+}
+.hero p {
+  margin: 0;
+  font-size: 13.5px;
+  color: #e2e8f0;
+  line-height: 1.65;
+}
+.hero-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  z-index: 2;
+  flex: none;
+}
+.hero-cta .btn-white {
+  background: #fff;
+  color: var(--blue-dark);
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-size: 12px;
+  font-weight: 800;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+.hero-cta .btn-outline-white {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ==================== SUMMARY STATS ==================== */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 24px;
+}
+.summary-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.summary-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  flex: none;
+}
+.summary-icon.red {
+  background: var(--red-soft);
+  color: var(--red);
+}
+.summary-card b {
+  font-family: 'Outfit', sans-serif;
+  font-size: 21px;
+  display: block;
+}
+.summary-card small {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+/* ==================== TOP RECOMMENDED BANNER STRIP ==================== */
+.rec-strip {
+  background: #fff;
+  border: 1px solid #bfdbfe;
+  border-radius: 20px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+.rec-strip-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.rec-strip-head h3 {
+  margin: 0;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rec-pill-tag {
+  background: var(--red);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+.rec-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.rec-mini-card {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 13px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.rec-mini-card:hover {
+  border-color: var(--blue);
+  transform: translateY(-2px);
+}
+.rec-mini-card img {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  object-fit: cover;
+  object-position: top;
+  flex: none;
+}
+.rec-mini-info { min-width: 0; flex: 1; }
+.rec-mini-info b {
+  font-size: 13px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rec-mini-info small {
+  font-size: 11px;
+  color: var(--muted);
+  display: block;
+}
+.rec-score-pill {
+  background: var(--blue);
+  color: #fff;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+/* ==================== DISCOVER HEADER & CONTROLS ==================== */
+.discover-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 14px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.heading {
+  font-family: 'Outfit', 'Pretendard', sans-serif;
+  letter-spacing: -0.4px;
+  font-size: 22px;
+  margin: 0;
+}
+.tiny-sub {
+  color: var(--muted);
+  font-size: 12.5px;
+  margin-top: 4px;
+}
+.linkish {
+  border: 0;
+  background: transparent;
+  color: var(--blue);
+  font-weight: 800;
+  font-size: 13px;
+}
+.controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.search {
+  min-width: 220px;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 11px;
+  padding: 10px 13px;
+  color: var(--ink);
+  font-size: 12.5px;
+  outline: none;
+}
+.search:focus, .sort:focus { border-color: var(--blue); }
+.sort {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 11px;
+  padding: 10px 12px;
+  color: #334155;
+  font-size: 12.5px;
+  font-weight: 700;
+  outline: none;
+}
+.pill-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #334155;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pill-toggle input { accent-color: var(--blue); }
+
+/* ==================== 3-COLUMN PROFILE CARDS GRID ==================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.person-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 15px;
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.16s, box-shadow 0.16s;
+  box-shadow: var(--shadow);
+}
+.person-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+}
+.person-card.saved-border {
+  border-color: #fca5a5;
+  box-shadow: 0 12px 32px rgba(220, 38, 38, 0.08);
+}
+.photo {
+  height: 195px;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  background: #e2e8f0;
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.match-badge {
+  position: absolute;
+  right: 11px;
+  top: 11px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12.5px;
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(29, 78, 216, 0.35);
+}
+.match-badge.warn {
+  background: var(--red);
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+}
+.save-btn {
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.save-btn.saved {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+}
+.person-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 14px 1px 5px;
+  gap: 6px;
+}
+.person-top h3 {
+  font-family: 'Outfit', 'Pretendard', sans-serif;
+  font-size: 18px;
+  letter-spacing: -0.4px;
+  margin: 0;
+}
+.person-top .age {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.verified{font-size:10px;color:#1d4ed8;background:#eff6ff;padding:5px 7px;border-radius:6px;font-weight:800}
+.photo{background:var(--avatar);height:158px}
+.photo .portrait{color:#1e3a8a;background:#ffffff8a}
+.photo .deco,.photo .deco2{pointer-events:none}
+.hero{background:linear-gradient(125deg,#1e3a8a,#1d4ed8 60%,#dc2626);color:white}
+.hero h1,.hero .eyebrow{color:white}.hero p{color:#e2e8f0}
+.hero-graphic{display:none}
+.nav button.active{background:#eff6ff;color:#1d4ed8}.logo-mark{background:linear-gradient(135deg,#dc2626,#1d4ed8);transform:none}
+.linkish{color:#1d4ed8}.search:focus,.sort:focus{border-color:#1d4ed8}
+.save.saved{color:#dc2626}.profile-btn,.primary{background:#1d4ed8}.profile-btn:hover,.primary:hover{background:#1e3a8a}
+.person-card.ineligible{opacity:.85}
+.person-attributes{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0 14px}
+.chip{background:#eff6ff;color:#1e40af;padding:6px 9px;border-radius:7px;font-size:10px;font-weight:700}
+.chip.bad{background:#fef2f2;color:#b91c1c}
+.person-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:13px;border-top:1px solid #e2e8f0}
+.person-meta{font-size:12px;color:#64748b}
+.person-top h3{color:#0f172a}
+.match-badge{background:#1d4ed8;color:white}.match-badge.warn{background:#dc2626;color:white}
+.pref-hero{background:#eff6ff;border:1px solid #bfdbfe}.pref-panel{border-radius:19px}
+.modal-bg{z-index:100}
+.login-screen .logo{margin:0}
+.login-card .btn-blue{width:100%}
+@media(max-width:760px){.sidebar{height:auto;position:static;width:100%;padding:15px;border-right:0;border-bottom:1px solid #e2e8f0}.sidebar .logo{margin:0 0 12px}.sidebar-bottom,.sidebar .side-label{display:none}.sidebar .nav{display:flex;overflow:auto}.sidebar .nav button{white-space:nowrap;width:auto}.app{display:block}.content{padding:18px 15px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.summary{gap:8px}.summary-card{padding:12px}.person-card{padding:11px}.photo{height:120px}.hero h1{font-size:26px}.hero-copy{padding:23px}.login-main{grid-template-columns:1fr;gap:20px}}
+@media(max-width:380px){.grid{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<section id="boston-login" class="login-screen"><div class="login-topbar"><div class="logo"><div class="logo-mark">⌂</div>RoomMatch Boston</div><span class="pill">🇰🇷 Boston Students</span></div><div class="login-main"><div class="login-pitch"><span class="pill">보스턴 한인 유학생 룸메이트 매칭</span><h1>함께 살아도 편한 사람,<br>생활 습관부터 비교하세요.</h1><p>월세, 흡연 여부, 개인 화장실, 채광, 치안, 통학 거리부터 취침 시간까지. 나와 잘 맞는 룸메이트를 찾아보세요.</p><div class="uni-tags"><span>Northeastern</span><span>BU</span><span>BC</span><span>Berklee</span></div></div><div class="login-card"><h2>RoomMatch 시작하기 🏠</h2><p>이름을 입력한 뒤 프로토타입을 체험하세요.</p><div class="login-field"><label>이름</label><input id="boston-name" placeholder="예: Jane" value="Jane"></div><div class="login-field"><label>학교</label><select id="boston-school"><option>Northeastern University</option><option>Boston University</option><option>Boston College</option><option>Berklee College of Music</option><option>Emerson College</option></select></div><button class="btn-blue" id="boston-enter">데모 시작하기 →</button><p style="font-size:11px;color:#64748b;margin-top:14px">데모 모드 · 실제 로그인, 학생 인증 및 메시지 전송 없음</p></div></div><div class="login-footer">RoomMatch Boston · Student prototype · Fictional profiles</div></section><div class="app" id="boston-app" style="display:none">
+ <aside class="sidebar">
+  <div class="logo"><div class="logo-mark"><span>⌂</span></div>RoomMatch<span style="color:#f5ac71">.</span></div>
+  <div class="side-label">Your space</div>
+  <nav class="nav">
+    <button class="active" data-page="discover"><span class="emoji">◈</span> 룸메이트 찾기</button>
+    <button data-page="saved"><span class="emoji">♡</span> 저장한 후보 <span class="count" id="saved-count">0</span></button>
+    <button data-page="preferences"><span class="emoji">☷</span> 내 조건 설정</button>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="tip-card"><div class="tip-icon">✨</div><b>It's about the little things.</b><p>Set your non-negotiables and we'll help you find roommates who fit your day-to-day life.</p></div>
+    <div class="user"><div class="user-bubble">JM</div><div><b>My demo profile</b><small>Boston · Student</small></div></div>
+  </div>
+ </aside>
+ <main class="content">
+  <header class="topbar"><div class="crumb">Your space <span id="crumb-page">/ 룸메이트 찾기</span></div><div class="top-actions"><div class="city">📍 Boston, MA</div><div class="mini-badge">✦ Interactive demo</div></div></header>
+  <section id="discover-page">
+   <div class="hero"><div class="hero-copy"><div class="eyebrow">YOUR PEOPLE. YOUR PLACE.</div><h1>Find a roommate who <span style="color:#0c8574">just gets you.</span></h1><p>More than matching a budget. Find someone who shares your habits, respects your space, and feels like home.</p></div><div class="hero-graphic"><div class="shape-a"></div><div class="shape-b"></div><div class="window"></div><div class="star">✳</div></div></div>
+   <div class="summary"><div class="summary-card"><div class="summary-icon">🏡</div><div><b id="stat-eligible">0</b><small>Meet your must-haves</small></div></div><div class="summary-card"><div class="summary-icon peach">💛</div><div><b id="stat-top">0%</b><small>Highest compatibility</small></div></div><div class="summary-card"><div class="summary-icon lilac">🔎</div><div><b>10+</b><small>Matching factors</small></div></div></div>
+   <div class="discover-head"><div><h2 class="heading">Meet your potential roommates <span style="font-size:17px;color:#94a69c" id="result-count"></span></h2><div class="tiny-sub">Ranked by your preferences and deal-breakers, not just a quiz.</div></div><button class="linkish" id="edit-link">⚙ Edit my preferences ↗</button></div>
+   <div class="controls" style="margin-bottom:17px"><input class="search" id="search" placeholder="⌕  Search by name or area..." aria-label="Search profiles" /><select class="sort" id="sort" aria-label="Sort matches"><option value="best">Best match first</option><option value="budget">월세 낮은 순 first</option><option value="distance">Closest to campus</option></select><label class="pill-toggle"><input type="checkbox" id="eligible-only"/> 필수 조건 충족만 보기</label></div>
+   <div class="grid" id="cards"></div>
+  </section>
+  <section id="saved-page" class="hidden"><div class="saved-hero"><h1>Your saved matches ♡</h1><p>Keep the people you might want to live with all in one place.</p></div><div class="grid" id="saved-cards"></div></section>
+  <section id="preferences-page" class="hidden">
+    <div class="pref-hero"><div><div class="eyebrow" style="margin-bottom:8px">MAKE IT YOURS</div><h1>나의 이상적인 룸메이트 🏡</h1><p>Adjust what matters most to you. The matching scores update automatically.</p></div><div style="font-size:50px">🪴</div></div>
+    <div class="pref-panel"><h2 class="panel-title">01 — 집과 위치</h2><p class="panel-info">First, let's get the practical stuff right.</p>
+      <div class="fields">
+        <div class="field"><label for="budget">월 최대 월세 ($)</label><input id="budget" type="number" min="600" max="4000" step="50"><div class="help">Profiles over this amount won't meet your must-haves.</div></div>
+        <div class="field"><label for="distance">최대 통학 시간 (분)</label><input id="distance" type="number" min="1" max="90"><div class="help">Estimated demo transit times, not live directions.</div></div>
+        <div class="field"><label for="sunlight">채광</label><select id="sunlight"><option value="bright">I love a bright, sunny space</option><option value="some">Some natural light is enough</option><option value="any">No preference</option></select></div>
+        <div class="field"><label for="safety">출입 보안</label><select id="safety"><option value="enhanced">Very important — controlled entry</option><option value="standard">Prefer controlled entry</option><option value="any">No preference</option></select></div>
+      </div>
+    </div>
+    <div class="pref-panel"><h2 class="panel-title">02 — 생활 습관</h2><p class="panel-info">The small routines that make a big difference.</p><div class="fields">
+      <div class="field"><label for="sleep">수면 패턴</label><select id="sleep"><option value="early">Early bird (before 11 PM)</option><option value="balanced">Somewhere in between</option><option value="late">Night owl (after 1 AM)</option><option value="any">No preference</option></select></div>
+      <div class="field"><label for="clean">청결도</label><select id="clean"><option value="tidy">Very tidy</option><option value="balanced">Somewhat tidy</option><option value="relaxed">Relaxed</option><option value="any">No preference</option></select></div>
+      <div class="field"><label for="noise">소음</label><select id="noise"><option value="quiet">Quiet home</option><option value="balanced">Some background noise is fine</option><option value="social">Lively and social</option><option value="any">No preference</option></select></div>
+      <div class="field"><label for="guests">친구·손님 방문</label><select id="guests"><option value="rare">Rarely</option><option value="sometimes">Sometimes, with notice</option><option value="often">Often</option><option value="any">No preference</option></select></div>
+      <div class="field"><label for="pets">Pets</label><select id="pets"><option value="okay">Okay with pets</option><option value="no">Prefer no pets</option><option value="any">No preference</option></select></div>
+      <div class="field"><label for="cooking">Cooking habits</label><select id="cooking"><option value="often">Cook often</option><option value="sometimes">Cook sometimes</option><option value="rare">Rarely cook</option><option value="any">No preference</option></select></div>
+    </div></div>
+    <div class="pref-panel"><h2 class="panel-title">03 — 절대 양보할 수 없는 조건</h2><p class="panel-info">A profile that doesn't meet these will be flagged, even if your overall compatibility is high.</p><div class="checks">
+      <label class="checkcard"><input type="checkbox" id="noSmoking"> 🚭 실내 금연 필수</label>
+      <label class="checkcard"><input type="checkbox" id="privateBathroom"> 🚿 개인 화장실 필수</label>
+      <label class="checkcard"><input type="checkbox" id="closeCampus"> 🎓 통학 시간 제한 필수</label>
+      <label class="checkcard"><input type="checkbox" id="secureEntry"> 🔐 출입 보안 필수</label>
+    </div></div>
+    <div class="actions-row"><button class="secondary" id="reset-prefs">↺ 기본값으로 초기화</button><button class="primary" id="view-matches">매칭 결과 확인 →</button></div>
+    <p class="footer-p">This prototype uses mock data. 신원·재학·매물·보안·통학 정보는 확인되지 않은 예시입니다.</p>
+  </section>
+  <p class="bottom-note">ROOMMATCH · Student project MVP · 프로필과 정보는 가상 데이터이며 실제 메시지를 전송하지 않습니다.</p>
+ </main>
+</div>
+<div class="modal-bg" id="modal-bg" role="dialog" aria-modal="true" aria-label="Roommate profile"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const people=[
+ {id:1,name:'김민아',initial:'김',age:21,major:'Northeastern University',area:'Fenway',budget:1450,distance:12,smoking:false,bathroom:true,sunlight:'bright',safety:'enhanced',sleep:'balanced',clean:'tidy',noise:'quiet',guests:'sometimes',pets:'okay',cooking:'sometimes',avatar:'#d9eedc',tag:'커피와 조용하고 정돈된 집을 좋아해요.'},
+ {id:2,name:'이지민',initial:'이',age:20,major:'Boston University',area:'Mission Hill',budget:1380,distance:9,smoking:false,bathroom:false,sunlight:'some',safety:'standard',sleep:'early',clean:'tidy',noise:'quiet',guests:'rare',pets:'no',cooking:'often',avatar:'#f9e2de',tag:'일찍 등교하고, 주방 청결을 중요하게 생각해요.'},
+ {id:3,name:'박서연',initial:'박',age:22,major:'Berklee College of Music',area:'Symphony',budget:1680,distance:7,smoking:false,bathroom:true,sunlight:'bright',safety:'enhanced',sleep:'late',clean:'balanced',noise:'balanced',guests:'sometimes',pets:'okay',cooking:'often',avatar:'#e6e0fa',tag:'밤늦게 활동하지만 햇빛 좋은 방을 선호해요.'},
+ {id:4,name:'정수빈',initial:'정',age:21,major:'Boston College',area:'Allston',budget:1860,distance:24,smoking:false,bathroom:true,sunlight:'bright',safety:'enhanced',sleep:'balanced',clean:'tidy',noise:'quiet',guests:'rare',pets:'no',cooking:'rare',avatar:'#f7e5c4',tag:'정리정돈과 조용하고 밝은 집을 좋아해요.'},
+ {id:5,name:'최유나',initial:'최',age:20,major:'Emerson College',area:'Roxbury',budget:1300,distance:20,smoking:true,bathroom:false,sunlight:'bright',safety:'standard',sleep:'late',clean:'relaxed',noise:'social',guests:'often',pets:'okay',cooking:'sometimes',avatar:'#d9eaf4',tag:'친구들과 시간을 보내는 활기찬 생활을 좋아해요.'},
+ {id:6,name:'박하린',initial:'박',age:23,major:'Northeastern University',area:'Back Bay',budget:1590,distance:15,smoking:false,bathroom:true,sunlight:'some',safety:'enhanced',sleep:'early',clean:'tidy',noise:'quiet',guests:'sometimes',pets:'no',cooking:'sometimes',avatar:'#f6dbeb',tag:'조용한 공부 시간과 깨끗한 공용 공간을 원해요.'}
+];
+const defaults={budget:1750,distance:20,sunlight:'bright',safety:'enhanced',sleep:'balanced',clean:'tidy',noise:'quiet',guests:'sometimes',pets:'okay',cooking:'sometimes',noSmoking:true,privateBathroom:false,closeCampus:false,secureEntry:false};
+const keys=Object.keys(defaults);const getSaved=(k, fallback)=>{try{let x=JSON.parse(localStorage.getItem(k));return x??fallback}catch{return fallback}};
+let prefs={...defaults,...getSaved('roommatch_prefs',{})};let saved=new Set(getSaved('roommatch_saved',[]));let currentPage='discover';let activeId=null;let draftOpen=false;
+const $=id=>document.getElementById(id);const pretty={bright:'Bright sunlight',some:'Some natural light',early:'Early bird',balanced:'Balanced',late:'Night owl',tidy:'Very tidy',relaxed:'Relaxed',quiet:'Quiet',social:'Social',rare:'Rarely',sometimes:'Sometimes',often:'Often',okay:'Pets okay',no:'No pets',enhanced:'Controlled entry+',standard:'Standard entry',any:'No preference'};
+function score(p){let rules=[];const add=(label,match,weight,mine,theirs)=>rules.push({label,match,weight,mine,theirs});const within=(a,b)=>a===b || a==='any';
+add('Rent',p.budget<=prefs.budget,15,'Up to $'+prefs.budget,'$'+p.budget);
+add('Campus commute',p.distance<=prefs.distance,11,'Up to '+prefs.distance+' min',p.distance+' min');
+add('Smoking',!p.smoking,16,'No smoking',p.smoking?'Smoking allowed':'No smoking');
+add('Private bathroom',p.bathroom,5,'Preferred',p.bathroom?'Available':'Shared');
+add('채광',prefs.sunlight==='any'||(prefs.sunlight==='some'&&['some','bright'].includes(p.sunlight))||prefs.sunlight===p.sunlight,7,pretty[prefs.sunlight],pretty[p.sunlight]);
+add('Building access',prefs.safety==='any'||p.safety==='enhanced'||(prefs.safety==='standard'&&p.safety==='standard'),9,pretty[prefs.safety],pretty[p.safety]);
+add('수면 패턴',within(prefs.sleep,p.sleep),10,pretty[prefs.sleep],pretty[p.sleep]);
+add('Cleaning',within(prefs.clean,p.clean),12,pretty[prefs.clean],pretty[p.clean]);
+add('소음',within(prefs.noise,p.noise),7,pretty[prefs.noise],pretty[p.noise]);
+add('Guests',within(prefs.guests,p.guests),4,pretty[prefs.guests],pretty[p.guests]);
+add('Pets',prefs.pets==='any'||prefs.pets===p.pets,2,pretty[prefs.pets],pretty[p.pets]);
+add('Cooking',within(prefs.cooking,p.cooking),2,pretty[prefs.cooking],pretty[p.cooking]);
+let total=rules.reduce((n,r)=>n+r.weight,0);let points=rules.reduce((n,r)=>n+r.weight*(r.match?1:0),0);let blockers=[];
+if(p.budget>prefs.budget)blockers.push('Above your rent limit');if(prefs.noSmoking&&p.smoking)blockers.push('Smoking household');if(prefs.privateBathroom&&!p.bathroom)blockers.push('No private bathroom');if(prefs.closeCampus&&p.distance>prefs.distance)blockers.push('Commute too long');if(prefs.secureEntry&&p.safety!=='enhanced')blockers.push('No controlled entry');
+return {score:Math.round(points/total*100),rules,blockers,eligible:!blockers.length};}
+function sorted(arr){let q=$('search')?.value.toLowerCase().trim()||'';let order=$('sort')?.value||'best';let eligibleOnly=$('eligible-only')?.checked||false;let res=arr.filter(p=>(p.name+' '+p.area+' '+p.major).toLowerCase().includes(q)&&(!eligibleOnly||score(p).eligible));if(order==='budget')res.sort((a,b)=>a.budget-b.budget);else if(order==='distance')res.sort((a,b)=>a.distance-b.distance);else res.sort((a,b)=>Number(score(b).eligible)-Number(score(a).eligible)||score(b).score-score(a).score);return res}
+function card(p){let s=score(p),m=s.rules.filter(x=>x.match).slice(0,3).map(x=>x.label),tags=m.length?m:['Campus commute'];return `<article class="person-card ${s.eligible?'':'ineligible'}"><div class="photo" style="--avatar:${p.avatar}"><div class="deco"></div><div class="deco2"></div><span class="portrait">${p.initial}</span><button class="save ${saved.has(p.id)?'saved':''}" data-save="${p.id}" aria-label="${saved.has(p.id)?'Remove from saved':'Save'} ${p.name}">${saved.has(p.id)?'♥':'♡'}</button><span class="match-badge ${s.eligible?'':'warn'}">${s.score}% ${s.eligible?'match':'· mismatch'}</span></div><div class="person-top"><h3>${p.name} <span class="age">${p.age}</span></h3><span class="verified">✓ demo profile</span></div><p class="person-meta">📍 ${p.area} · ${p.distance} min to campus</p><div class="person-attributes">${tags.map(t=>`<span class="chip">✓ ${t}</span>`).join('')}${!s.eligible?`<span class="chip bad">⚠ ${s.blockers[0]}</span>`:''}</div><div class="person-bottom"><div class="price">$${p.budget.toLocaleString()}<span class="per"> / mo</span></div><button class="profile-btn" data-open="${p.id}">궁합 확인 →</button></div></article>`}
+function render(){let eligible=people.filter(p=>score(p).eligible);$('stat-eligible').textContent=eligible.length;$('stat-top').textContent=Math.max(...people.map(p=>score(p).score))+'%';let list=sorted(people);$('result-count').textContent='('+list.length+')';$('cards').innerHTML=list.map(card).join('')||`<div class="no-results"><div style="font-size:32px">🪴</div><h3>No matches for those filters</h3><p>Try a different search or adjust your must-haves.</p><button class="secondary" data-clear="1">Clear filters</button></div>`;let savedPeople=people.filter(p=>saved.has(p.id));$('saved-count').textContent=saved.size;$('saved-cards').innerHTML=savedPeople.length?savedPeople.map(card).join(''):`<div class="empty-saved" style="grid-column:1/-1"><div class="big">💌</div><h2 style="font-family:Outfit">No favorites yet</h2><p>Tap the heart on a profile you like. All your favorite matches will show up here.</p><button class="primary" data-go="discover">Explore matches →</button></div>`;try{localStorage.setItem('roommatch_boston_saved',JSON.stringify([...saved]));localStorage.setItem('roommatch_boston_prefs',JSON.stringify(prefs))}catch{}}
+function go(page){currentPage=page;for(let p of ['discover','saved','preferences'])$(p+'-page').classList.toggle('hidden',p!==page);document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===page));$('crumb-page').textContent='/ '+({discover:'룸메이트 찾기',saved:'저장한 후보',preferences:'내 조건 설정'}[page]);if(page==='preferences')fillForm();render();window.scrollTo({top:0,behavior:'smooth'})}
+function fillForm(){keys.forEach(k=>{let el=$(k);if(el){if(el.type==='checkbox')el.checked=!!prefs[k];else el.value=prefs[k]}})}
+function takeForm(){keys.forEach(k=>{let el=$(k);if(el){prefs[k]=el.type==='checkbox'?el.checked:el.type==='number'?Math.max(1,Number(el.value)||defaults[k]):el.value}});render()}
+function showProfile(id){let p=people.find(p=>p.id===id);if(!p)return;activeId=id;draftOpen=false;let s=score(p);$('modal').innerHTML=`<div class="modal-head"><div class="modal-person"><div class="modal-avatar" style="--avatar:${p.avatar}">${p.initial}</div><div><h2>${p.name}, ${p.age}</h2><small>📍 ${p.area} · ${p.major} · $${p.budget}/mo</small></div></div><button class="close" data-close="1" aria-label="Close">×</button></div><div class="modal-score ${s.eligible?'':'bad'}"><strong>${s.score}%</strong><div class="score-desc"><b>${s.eligible?'Compatibility score':'Some must-haves aren’t met'}</b><br>${s.eligible?'Based on your preferences and everyday habits.':s.blockers.join(' · ')}</div></div><div style="font-size:13px;color:#748b7f;line-height:1.6;margin:0 0 16px">“${p.tag}”</div><h3>Your compatibility breakdown</h3><div class="compare">${s.rules.map(r=>`<div class="compare-row"><div><small>YOUR PREFERENCE · ${r.label}</small><b>${r.mine||'Any'}</b></div><div><small>THEIR PROFILE</small><b>${r.theirs}</b></div><span class="status" title="${r.match?'Aligned':'Different'}">${r.match?'✅':'◯'}</span></div>`).join('')}</div><p class="footer-p" style="margin-top:15px">Demo scores reflect preference similarity, not personal compatibility or verified safety. ID, student status, and home details have not been checked.</p><div id="draft-slot"></div><div class="modal-foot"><button class="secondary" data-save="${p.id}">${saved.has(p.id)?'♥ Saved · Remove':'♡ Save match'}</button><button class="primary" data-draft="${p.id}">✉ Draft an intro →</button></div>`;$('modal-bg').classList.add('open');document.body.style.overflow='hidden'}
+function closeModal(){$('modal-bg').classList.remove('open');document.body.style.overflow=''}
+function draftIntro(id){let p=people.find(x=>x.id===id);if(!p)return;draftOpen=true;$('draft-slot').innerHTML=`<div class="draft"><div style="font-size:12px;font-weight:800;color:#416c59;margin-bottom:8px">✉️ Intro message draft — not sent</div><textarea id="draft-text">Hi ${p.name}! I came across your profile on RoomMatch and thought we might be a good fit. I'm looking for a roommate who values a comfortable shared space. I'd love to chat about living preferences and see if we're compatible!</textarea><div style="display:flex;justify-content:flex-end;margin-top:9px"><button class="secondary" data-copy="1">Copy message</button></div></div>`;$('draft-slot').scrollIntoView({behavior:'smooth',block:'nearest'})}
+let toastTimer;function toast(msg){let e=$('toast');e.textContent=msg;e.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.classList.remove('show'),2400)}
+document.addEventListener('click',async e=>{let a=e.target.closest('button');if(!a)return;if(a.dataset.page)go(a.dataset.page);if(a.dataset.go)go(a.dataset.go);if(a.id==='edit-link')go('preferences');if(a.id==='view-matches'){takeForm();go('discover');toast('Your matches have been updated ✓')}if(a.id==='reset-prefs'){prefs={...defaults};fillForm();render();toast('Preferences reset to demo defaults')}if(a.dataset.save){let id=Number(a.dataset.save);saved.has(id)?saved.delete(id):saved.add(id);render();if($('modal-bg').classList.contains('open')&&activeId===id){showProfile(id)}else toast(saved.has(id)?'Saved to your matches ♡':'Removed from saved matches')}if(a.dataset.open)showProfile(Number(a.dataset.open));if(a.dataset.close)closeModal();if(a.dataset.draft)draftIntro(Number(a.dataset.draft));if(a.dataset.copy){let text=$('draft-text').value;try{await navigator.clipboard.writeText(text);toast('Intro copied to clipboard!')}catch{let t=$('draft-text');t.select();document.execCommand('copy');toast('Intro selected for copying')}}if(a.dataset.clear){$('search').value='';$('eligible-only').checked=false;render()}});
+document.querySelectorAll('#preferences-page input,#preferences-page select').forEach(el=>el.addEventListener('change',takeForm));$('search').addEventListener('input',render);$('sort').addEventListener('change',render);$('eligible-only').addEventListener('change',render);$('modal-bg').addEventListener('click',e=>{if(e.target.id==='modal-bg')closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});fillForm();render();
+</script>
+<script>document.getElementById('boston-enter').addEventListener('click',function(){document.getElementById('boston-login').style.display='none';document.getElementById('boston-app').style.display='flex';document.querySelector('.user b').textContent=document.getElementById('boston-name').value.trim()||'Jane';window.scrollTo(0,0)});document.getElementById('boston-name').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('boston-enter').click()});</script></body>
+</html>
