@@ -150,4 +150,3 @@ const profilePhotos = {
   "72": "assets/images/roommate-16.jpg"
 };
 
-

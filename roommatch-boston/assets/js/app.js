@@ -80,12 +80,12 @@ function render() {
     catch (e) { }
     translateUI();
 }
-function navigate(name) { page = name; for (const p of ['discover', 'saved', 'preferences', 'messages', 'swipe', 'account'])
+function navigate(name, instant = false) { page = name; for (const p of ['discover', 'saved', 'preferences', 'messages', 'swipe', 'account'])
     $(p + '-page').classList.toggle('hidden', p !== name); document.querySelectorAll('[data-page]').forEach(el => el.classList.toggle('active', el.dataset.page === name)); $('crumb-page').textContent = '/ ' + ({ discover: '룸메이트 찾기', saved: '저장한 후보', preferences: '내 조건 설정', messages: '개인 메시지', swipe: '스와이프 매칭', account: '내 프로필' }[name]); if (name === 'preferences')
     fillPrefs(); render(); if (name === 'messages')
     renderMessages(); if (name === 'swipe')
     renderSwipe(); if (name === 'account')
-    renderAccount(); translateUI(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    renderAccount(); translateUI(); window.scrollTo({ top: 0, behavior: instant ? 'instant' : 'smooth' }); }
 function fillPrefs() { for (const k of keys) {
     const el = $(k);
     if (el.type === 'checkbox')
@@ -184,7 +184,10 @@ function sampleReply() { if (!activeChatId)
 } }
 let toastTimeout;
 function toast(msg) { $('toast').textContent = msg; $('toast').classList.add('show'); clearTimeout(toastTimeout); toastTimeout = setTimeout(() => $('toast').classList.remove('show'), 2300); }
-function enter() { userName = $('login-name').value.trim() || 'Jane'; userSchool = $('login-school').value; loadChats(); $('user-name').textContent = userName; $('user-school').textContent = userSchool.replace(' University', '').replace(' College of Music', ''); $('user-initial').textContent = userName.slice(0, 1).toUpperCase(); $('login-screen').classList.add('hidden'); $('main-app').classList.remove('hidden'); loadAccount(); renderFilters(); navigate('discover'); }
+function enter() { userName = $('login-name').value.trim() || 'Jane'; userSchool = $('login-school').value; loadChats(); $('user-name').textContent = userName; $('user-school').textContent = userSchool.replace(' University', '').replace(' College of Music', ''); $('user-initial').textContent = userName.slice(0, 1).toUpperCase(); // Route directly into the dashboard. Remove every entry screen from layout so the user never has to scroll past login.
+    ['auth-gateway', 'landing-screen', 'onboarding-screen', 'login-screen'].forEach(id => $(id).classList.add('hidden'));
+    $('main-app').classList.remove('hidden');
+    loadAccount(); renderFilters(); navigate('discover', true); }
 $('enter-demo').addEventListener('click', enter);
 $('quick-demo').addEventListener('click', enter);
 $('login-name').addEventListener('keydown', e => { if (e.key === 'Enter')
@@ -508,5 +511,4 @@ document.addEventListener('keydown', e => { if (page !== 'swipe' || $('modal-bg'
 } });
 renderFilters();
 translateUI();
-
 

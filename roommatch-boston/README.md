@@ -1,30 +1,21 @@
-# RoomMatch Boston — Interactive Prototype (V10)
+# RoomMatch Boston
 
-RoomMatch Boston is an interactive roommate-matching site for Boston-area students.
+The latest RoomMatch Boston interactive website is in this folder.
 
-## Preview
-This folder contains the newest prototype, with the soft pastel login design and an instant screen transition after successful sign-in.
+## Website
+After GitHub Pages deployment succeeds: https://jcm070611-creator.github.io/Introduction/
 
-Use a GitHub HTML rendering proxy for a quick preview:
-https://raw.githack.com/jcm070611-creator/Introduction/main/roommatch-boston/index.html
-
-For a permanent hosted link, enable GitHub Pages for this repository and select main / root. The intended URL is:
-https://jcm070611-creator.github.io/Introduction/roommatch-boston/
+## Structure
+- `index.html`: entry page
+- `assets/css/`: styling and signup/login layout
+- `assets/js/`: profiles, matching, preferences, onboarding and chat logic
+- `assets/images/`: example profile photos
 
 ## Features
-- Landing, email/mobile login and sign-up
-- Multi-stage onboarding with university and neighborhood filters
-- 72 roommate candidates, progressive discovery and swipe matching
-- Matching scores and limited details until mutual match
-- Korean/English interface, saved profiles and editable account details
-- Browser-side sample chats, read/typing indicators and onboarding guidance
-- Authentication screen replaced immediately with the main app after successful login
+Includes a pastel login screen, school selection and signup flow, 72 roommate profiles, neighborhood and university filtering, swipe matching, private matched-profile details, and a chat-style interface with simulated replies.
 
-## Files
-- `index.html` page markup
-- `assets/css/` visual styles
-- `assets/js/` profiles, app, onboarding, account and chat behavior
-- `assets/images/` 28 sample portrait images
+## Important limitations
+This is a front-end prototype. Real identity document verification, external account authentication, online user status and live multi-user messaging are **not** implemented. Browser-stored demo accounts are not secure real accounts. Do not enter real passwords or upload real ID documents. Data is stored locally on the visitor's own device.
 
-## Important prototype notice
-This is not a production authentication or roommate service. No real identity verification, AI service or user-to-user messaging is connected. The roommate listings/photos, login behavior, read receipts, and automatic chat replies are illustrative. Local accounts are scoped to the browser; do not enter actual passwords, ID photos, phone numbers or other sensitive information.
+## Deploy
+The workflow in `.github/workflows/roommatch-pages.yml` publishes this folder to GitHub Pages upon pushes to `main`. If the GitHub Pages site is not enabled, the repository owner may need to select **Settings → Pages → Build and deployment → Source: GitHub Actions** and then rerun the workflow.

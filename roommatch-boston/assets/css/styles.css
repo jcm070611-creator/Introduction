@@ -839,3 +839,11 @@ a { color: inherit; text-decoration: none; }
 @media(max-width:650px){.category-head{flex-direction:column}.category-panel{padding:15px}.swipe-deck{height:490px;width:min(100%,355px)}.swipe-layout{gap:18px}.swipe-heading{display:block}.swipe-filter-row select{min-width:130px;max-width:180px}.login-header-tools{gap:6px}.login-topbar .pill{display:none}.account-editor{padding:19px}.avatar-editor{gap:12px}.avatar-big{width:87px;height:87px}.locale-switch button{padding:7px}}
 
 
+
+/* Login reliability and clear account-storage guidance */
+.gateway-login-tools{display:grid;gap:9px;margin:8px 0 14px;color:#546781;font-size:12px;line-height:1.5}
+.gateway-password-toggle{display:inline-flex;align-items:center;gap:8px;width:max-content;cursor:pointer;font-weight:700;color:#344967}
+.gateway-password-toggle input{accent-color:#4168b3;width:15px;height:15px}
+#gateway-account-status{background:#f5f7fc;border:1px solid #e3e9f5;border-radius:10px;padding:10px 12px;font-size:12px}
+.gateway-error.has-error{line-height:1.55}
+

@@ -130,4 +130,3 @@ $('ob-bio').addEventListener('input',updateBioCounter);
 document.querySelectorAll('[data-bio-example]').forEach(btn=>btn.addEventListener('click',()=>{$('ob-bio').value=btn.dataset.bioExample;updateBioCounter();$('ob-bio').focus();}));
 $('ob-form').addEventListener('input',e=>{if(e.target.classList.contains('field-invalid')){clearInlineErrors();$('ob-error').textContent='';}});
 
-

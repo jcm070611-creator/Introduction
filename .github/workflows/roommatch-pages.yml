@@ -1,0 +1,39 @@
+name: Deploy RoomMatch website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'roommatch-boston/**'
+      - '.github/workflows/roommatch-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: roommatch-github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Upload RoomMatch website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './roommatch-boston'
+      - name: Publish
+        id: deployment
+        uses: actions/deploy-pages@v4
