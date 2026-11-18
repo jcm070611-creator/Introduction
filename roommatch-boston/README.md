@@ -1,48 +1,30 @@
-# RoomMatch Boston — Latest Prototype (V8)
+# RoomMatch Boston — Interactive Prototype (V10)
 
-RoomMatch Boston is an interactive student roommate-matching prototype. This folder contains **the newest version**.
+RoomMatch Boston is an interactive roommate-matching site for Boston-area students.
 
-## View the website
+## Preview
+This folder contains the newest prototype, with the soft pastel login design and an instant screen transition after successful sign-in.
 
-- Visit the deployed website if GitHub Pages has been enabled, or download this folder and open `index.html` in a browser.
-- No build tools or installations are required.
-- To enable GitHub Pages, go to repository **Settings → Pages**, then deploy the `main` branch from `/(root)`. The resulting site path is `/Introduction/roommatch-boston/`.
+Use a GitHub HTML rendering proxy for a quick preview:
+https://raw.githack.com/jcm070611-creator/Introduction/main/roommatch-boston/index.html
+
+For a permanent hosted link, enable GitHub Pages for this repository and select main / root. The intended URL is:
+https://jcm070611-creator.github.io/Introduction/roommatch-boston/
 
 ## Features
+- Landing, email/mobile login and sign-up
+- Multi-stage onboarding with university and neighborhood filters
+- 72 roommate candidates, progressive discovery and swipe matching
+- Matching scores and limited details until mutual match
+- Korean/English interface, saved profiles and editable account details
+- Browser-side sample chats, read/typing indicators and onboarding guidance
+- Authentication screen replaced immediately with the main app after successful login
 
-- Soft pastel pink / blue landing page and sign-in/sign-up experience
-- Email or mobile sign-in and separate sign-up form
-- Four-step onboarding: university, contact details, identity-upload UI, preferences, photo and bio
-- Form validation with inline feedback, `Other` values for university and neighborhoods
-- 72 sample roommate profiles with progressive loading
-- Swipe matchmaking, compatibility scores, area/school filters, saved profiles
-- Mutual-match gates for private profile details
-- Browser-only chat simulation: responses, typing states, receipts and presence indicators
-- Korean / English interface, editable personal profile, first-time guidance
+## Files
+- `index.html` page markup
+- `assets/css/` visual styles
+- `assets/js/` profiles, app, onboarding, account and chat behavior
+- `assets/images/` 28 sample portrait images
 
-## Source structure
-
-```
-roommatch-boston/
-  index.html
-  README.md
-  assets/
-    css/
-      styles.css
-      onboarding.css
-      auth-feed.css
-      auth-improvements.css
-    js/
-      profiles.js
-      app.js
-      experience.js
-      onboarding.js
-      feed.js
-      auth.js
-    images/
-      roommate-01.jpg ... roommate-28.jpg
-```
-
-## Prototype safety and limitations
-
-The 72 profiles and 28 avatar images are **illustrative AI-generated examples**. Account and identity verification, social sign-in, server-side AI, real-time status, receipts and message delivery are not live services; these are browser-only interactions. Do **not** provide real IDs, passwords or sensitive data. Some settings and sign-in demonstrations use local browser state, which is not shared with other users or devices. Opening or refreshing the website starts from the sign-in screen.
+## Important prototype notice
+This is not a production authentication or roommate service. No real identity verification, AI service or user-to-user messaging is connected. The roommate listings/photos, login behavior, read receipts, and automatic chat replies are illustrative. Local accounts are scoped to the browser; do not enter actual passwords, ID photos, phone numbers or other sensitive information.
