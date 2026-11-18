@@ -1,4 +1,3 @@
-
 'use strict';
 const defaults = { budget: 1500, commute: 25, sunlight: 'bright', security: 'secure', sleep: 'balanced', clean: 'tidy', noise: 'quiet', guests: 'rare', mustSmoke: true, mustBathroom: false, mustCommute: true, mustSecure: false, mustSunlight: false, mustBudget: true };
 const keys = Object.keys(defaults);
@@ -511,4 +510,3 @@ document.addEventListener('keydown', e => { if (page !== 'swipe' || $('modal-bg'
 } });
 renderFilters();
 translateUI();
-

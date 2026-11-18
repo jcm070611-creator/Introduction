@@ -1,4 +1,3 @@
-
 'use strict';
 // 72 distinct example roommate profiles; identities and listing details are not verified.
 const profiles = [
@@ -149,4 +148,3 @@ const profilePhotos = {
   "71": "assets/images/roommate-15.jpg",
   "72": "assets/images/roommate-16.jpg"
 };
-

@@ -1,4 +1,3 @@
-
 'use strict';
 // Progressive discovery: 12 visible cards per batch, up to 72 candidates.
 function loadMoreRoommates(){
@@ -16,4 +15,3 @@ if('IntersectionObserver' in window){
  },{rootMargin:'0px 0px 180px 0px',threshold:0});
  observer.observe($('feed-trigger'));
 }
-

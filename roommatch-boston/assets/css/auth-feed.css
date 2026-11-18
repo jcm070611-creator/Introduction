@@ -1,4 +1,3 @@
-
 /* RoomMatch Boston V6 — inspired by broad, clean mobile sign-in layouts; independent branding. */
 .ob-form-card:has(.auth-first-step:not(.hidden)) {
  background:#2858a5;color:#fff;border:1px solid #2858a5;
@@ -62,4 +61,3 @@
  .auth-personal-details{grid-template-columns:1fr;gap:11px;}
  .auth-social-btn{width:65px;height:62px;}
 }
-

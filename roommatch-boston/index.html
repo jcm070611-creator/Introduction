@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RoomMatch Boston — 보스턴 한인 유학생 룸메이트 매칭</title>
 <meta name="description" content="RoomMatch Boston Korean student roommate matching interactive prototype." />
-<link rel="stylesheet" href="assets/css/styles.css">
-<link rel="stylesheet" href="assets/css/onboarding.css">
-<link rel="stylesheet" href="assets/css/auth-feed.css">
-<link rel="stylesheet" href="assets/css/auth-improvements.css">
+<link rel="stylesheet" href="assets/css/styles.css" />
+<link rel="stylesheet" href="assets/css/onboarding.css" />
+<link rel="stylesheet" href="assets/css/auth-feed.css" />
+<link rel="stylesheet" href="assets/css/auth-improvements.css" />
+<link rel="stylesheet" href="assets/css/soft-theme.css" />
 </head>
 <body>
 
@@ -26,7 +27,7 @@
       <span class="gateway-caption">WELCOME TO ROOMMATCH</span><h2>Welcome back!</h2><p class="gateway-intro">계정이 있다면 로그인하고, 처음이라면 회원가입을 시작하세요.</p>
       <div class="gateway-main-switch"><button type="button" class="active" id="gateway-login-tab">로그인 <small>Log In</small></button><button type="button" id="gateway-signup-tab">회원가입 <small>Sign Up</small></button></div>
       <form id="gateway-login-form" novalidate autocomplete="off">
-        <div class="gateway-method" role="tablist" aria-label="Login method"><button type="button" class="active" data-login-mode="email" aria-selected="true">Email</button><button type="button" data-login-mode="mobile" aria-selected="false">Mobile</button></div>
+        <div class="gateway-method" role="tablist" aria-label="Login method"><button type="button" class="active" data-login-mode="email" aria-selected="true">Email</button><button type="button" data-login-mode="mobile" aria-selected="false" disabled title="SMS 인증 연결 후 제공">Mobile (준비 중)</button></div>
         <label id="gateway-email-field" class="gateway-input"><span>이메일 주소</span><input id="gateway-email" type="email" placeholder="you@university.edu" autocomplete="off" /></label>
         <div id="gateway-mobile-field" class="gateway-phone-row hidden"><label class="gateway-input gateway-dial"><span>국가번호</span><select id="gateway-dial"><option value="+1">🇺🇸 +1</option><option value="+82">🇰🇷 +82</option><option value="+44">🇬🇧 +44</option><option value="+86">🇨🇳 +86</option></select></label><label class="gateway-input gateway-phone"><span>전화번호</span><input id="gateway-phone" type="tel" inputmode="tel" placeholder="123-456-7890" autocomplete="off" /></label></div>
         <label class="gateway-input gateway-password"><span>비밀번호</span><input id="gateway-password" type="password" placeholder="가입할 때 설정한 비밀번호" autocomplete="off" /></label>
@@ -35,7 +36,7 @@
       </form>
       <div class="gateway-divider"><span>NEW TO ROOMMATCH?</span></div>
       <button type="button" id="gateway-create" class="gateway-create">새 계정 만들기 <span>→</span></button>
-      <p class="gateway-footnote">현재 계정 로그인은 이 브라우저에서 만든 계정만 지원합니다. 실제 로그인·본인 인증 서비스는 연결되지 않았습니다.</p>
+      <p class="gateway-footnote">회원가입 계정은 Supabase에 저장됩니다. 신분증과 셀피는 본인 확인 미리보기이며 저장되지 않습니다.</p>
     </div></main>
   </div>
 </section>
@@ -53,7 +54,7 @@
  <form id="ob-form" novalidate>
   <div class="ob-step auth-first-step" data-step="1">
    <div class="auth-sparkle">✳ BOSTON STUDENT COMMUNITY</div>
-   <h1 class="auth-title" data-i18n="authTitle">Create your account</h1>
+   <h1 class="auth-title" data-i18n="authTitle">Log In or Sign Up</h1>
    <p class="auth-lead" data-i18n="authLead">나에게 맞는 룸메이트를 만나기 위한 첫 단계. 연락처를 입력해 시작하세요.</p>
    <div class="auth-switch" role="tablist" aria-label="Preferred sign up method">
     <button type="button" id="auth-email" class="active" data-auth-mode="email" role="tab" aria-selected="true">Email</button>
@@ -74,13 +75,13 @@
     <label><span data-i18n="university">소속 대학 *</span><select id="ob-school" required><option value="">학교 선택</option><option>Northeastern University</option><option>Boston University</option><option>Boston College</option><option>Berklee College of Music</option><option>Emerson College</option><option>Harvard University</option><option>Tufts University</option><option value="other">Other — 직접 입력</option></select><input class="conditional-input hidden" id="ob-school-other" maxlength="80" placeholder="학교 이름을 입력해 주세요" aria-label="직접 입력하는 학교 이름" /></label>
    </div>
    <label class="signup-secret"><span>비밀번호 설정 *</span><input id="ob-password" type="password" required minlength="8" maxlength="100" placeholder="8자 이상 입력" autocomplete="new-password" /></label>
-   <p class="signup-password-help">이 브라우저에서 계정을 다시 로그인할 때 사용해요. 실제 비밀번호는 입력하지 마세요.</p>
+   <p class="signup-password-help">Supabase 계정 로그인에 사용할 비밀번호입니다. 개인별로 안전한 비밀번호를 설정해 주세요.</p>
    <div class="auth-social-section"><span data-i18n="authConnect">Connect with</span><div class="auth-social-buttons">
     <button type="button" class="auth-social-btn google" data-social="Google" aria-label="Continue with Google"><span class="google-g">G</span></button>
     <button type="button" class="auth-social-btn apple" data-social="Apple" aria-label="Continue with Apple"><span class="apple-brand">Apple</span></button>
     <button type="button" class="auth-social-btn facebook" data-social="Facebook" aria-label="Continue with Facebook"><span class="fb-f">f</span></button>
    </div><small data-i18n="authSocialHelp">외부 계정 연결은 서비스 연동 후 제공됩니다.</small></div>
-   <p class="auth-terms" data-i18n="authTerms">계속 진행하면 RoomMatch의 이용약관과 개인정보 보호 안내에 동의하는 것으로 간주됩니다. 현재 연락처는 이 화면의 가입 흐름에만 사용되며 외부로 전송되지 않습니다.</p>
+   <p class="auth-terms" data-i18n="authTerms">계속 진행하면 RoomMatch의 이용약관과 개인정보 보호 안내에 동의하는 것으로 간주됩니다. 이름·이메일·전화번호·학교·희망 조건은 계정 생성을 위해 Supabase에 저장되며 관리자 3명이 확인할 수 있습니다.</p>
   </div>
   <div class="ob-step hidden" data-step="2"><h1 data-i18n="obTwo">신원 확인 자료 준비</h1><p class="ob-intro" data-i18n="obTwoSub">신분증 사진과 지금 찍은 셀피를 각각 선택해 주세요.</p><div class="id-grid"><label class="id-drop" for="ob-id"><span class="id-icon">▣</span><b data-i18n="idLabel">학생증 또는 신분증</b><small id="id-file-label">사진 선택하기 · JPG/PNG/WebP</small><img id="id-preview" class="id-preview hidden" alt="선택한 신분증 미리보기"/></label><label class="id-drop" for="ob-selfie"><span class="id-icon">◉</span><b data-i18n="selfieLabel">현재 얼굴 사진 (셀피)</b><small id="selfie-file-label">사진 선택하기 · JPG/PNG/WebP</small><img id="selfie-preview" class="id-preview hidden" alt="선택한 얼굴 사진 미리보기"/></label><input id="ob-id" type="file" class="visually-hidden" accept="image/jpeg,image/png,image/webp" /><input id="ob-selfie" type="file" class="visually-hidden" accept="image/jpeg,image/png,image/webp" /></div><div class="ob-confirm"><label><input type="checkbox" id="ob-consent" /> <span data-i18n="idConsent">두 사진에 나온 인물이 동일하며 제 자료임을 확인합니다.</span></label></div><p class="ob-privacy" data-i18n="idPrivacy">현재는 사진을 화면에서만 비교하는 가입 미리보기입니다. 실제 얼굴 대조·신원 인증은 수행하지 않으며, 파일은 저장하거나 전송하지 않습니다.</p></div>
   <div class="ob-step hidden" data-step="3"><h1 data-i18n="obThree">어떤 집이 잘 맞나요?</h1><p class="ob-intro" data-i18n="obThreeSub">이 정보로 처음 보는 추천 룸메이트를 정렬해 드려요.</p><div class="ob-field-grid"><label><span data-i18n="area">선호하는 동네 *</span><select id="ob-area" required><option value="">지역 선택</option><option>Fenway</option><option>Allston</option><option>Brookline</option><option>Back Bay</option><option>Mission Hill</option><option>Symphony</option><option value="other">Other — 직접 입력</option></select><input class="conditional-input hidden" id="ob-area-other" maxlength="80" placeholder="희망 동네를 직접 입력해 주세요" aria-label="직접 입력하는 동네 이름" /></label><label><span data-i18n="budget">월 최대 예산 ($) *</span><input id="ob-budget" required type="number" min="500" max="4000" value="1500" /></label><label><span data-i18n="sleep">수면 패턴</span><select id="ob-sleep"><option value="balanced">보통</option><option value="early">아침형</option><option value="late">야행성</option></select></label><label><span data-i18n="clean">청결 기준</span><select id="ob-clean"><option value="tidy">정돈된 환경</option><option value="relaxed">유연한 편</option></select></label><label><span data-i18n="commute">최대 통학 시간 (분)</span><input id="ob-commute" type="number" min="5" max="90" value="25" /></label><label><span data-i18n="mustSmoke">금연 필수</span><select id="ob-smoke"><option value="yes">네</option><option value="no">아니요</option></select></label></div></div>
@@ -139,7 +140,7 @@
    </section>
    <section id="account-page" class="hidden">
      <div class="profile-page-header"><div><span class="category-eyebrow">YOUR SPACE</span><h1 class="page-title">👤 내 프로필 & 계정 소개</h1><p class="page-sub">사진을 올리고 간단한 자기소개를 작성하면 내 프로필 미리보기에 반영돼요.</p></div></div>
-     <div class="account-layout"><section class="account-editor"><h3>프로필 사진</h3><div class="avatar-editor"><div class="avatar-big" id="account-avatar-preview">J</div><div><label for="account-photo" class="upload-button">📸 사진 업로드</label><input type="file" id="account-photo" accept="image/png,image/jpeg,image/webp" class="hidden"/><button type="button" id="remove-photo" class="upload-remove">기본 사진으로 변경</button><p>JPG, PNG, WebP · 최대 5MB<br>사진은 이 브라우저에 저장됩니다.</p></div></div><div class="account-fields"><label for="account-name">이름 <input id="account-name" maxlength="32" placeholder="이름 입력"></label><label for="account-school">학교 <select id="account-school"><option>Northeastern University</option><option>Boston University</option><option>Boston College</option><option>Berklee College of Music</option><option>Emerson College</option><option>Harvard University</option><option>Tufts University</option><option>기타 보스턴 지역 학교</option></select></label><label for="account-area">거주 희망 지역 <select id="account-area"></select></label><label for="account-bio">내 소개 <textarea id="account-bio" rows="5" maxlength="450" placeholder="예: 조용하고 깔끔한 생활을 좋아해요. 서로 배려하는 룸메이트를 찾고 있어요!"></textarea></label></div><button class="primary account-save" id="save-account">변경사항 저장</button></section>
+     <div class="account-layout"><section class="account-editor"><h3>프로필 사진</h3><div class="avatar-editor"><div class="avatar-big" id="account-avatar-preview">J</div><div><label for="account-photo" class="upload-button">📸 사진 업로드</label><input type="file" id="account-photo" accept="image/png,image/jpeg,image/webp" class="hidden"/><button type="button" id="remove-photo" class="upload-remove">기본 사진으로 변경</button><p>JPG, PNG, WebP · 최대 5MB<br>프로필 사진은 이 브라우저에서만 사용됩니다.</p></div></div><div class="account-fields"><label for="account-name">이름 <input id="account-name" maxlength="32" placeholder="이름 입력"></label><label for="account-school">학교 <select id="account-school"><option>Northeastern University</option><option>Boston University</option><option>Boston College</option><option>Berklee College of Music</option><option>Emerson College</option><option>Harvard University</option><option>Tufts University</option><option>기타 보스턴 지역 학교</option></select></label><label for="account-area">거주 희망 지역 <select id="account-area"></select></label><label for="account-bio">내 소개 <textarea id="account-bio" rows="5" maxlength="450" placeholder="예: 조용하고 깔끔한 생활을 좋아해요. 서로 배려하는 룸메이트를 찾고 있어요!"></textarea></label></div><button class="primary account-save" id="save-account">변경사항 저장</button></section>
      <aside class="account-preview-card"><div class="profile-preview-banner">MY ROOMMATCH PROFILE</div><div class="account-avatar-card" id="account-card-photo">J</div><h2 id="account-card-name">Jane</h2><p id="account-card-school">Northeastern University</p><span class="account-location" id="account-card-area">📍 Fenway</span><blockquote id="account-card-bio">안녕하세요! 서로 배려하는 룸메이트를 찾고 있어요.</blockquote><div class="account-warning">🔒 프로필 정보는 안전하게 관리하세요. 현재 사진과 소개는 이 브라우저에 저장됩니다.</div></aside></div>
    </section>
    <section id="messages-page" class="hidden">
@@ -158,4 +159,5 @@
 <script src="assets/js/experience.js"></script>
 <script src="assets/js/onboarding.js"></script>
 <script src="assets/js/feed.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="assets/js/auth.js"></script></body></html>

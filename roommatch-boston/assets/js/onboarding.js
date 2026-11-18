@@ -1,4 +1,3 @@
-
 'use strict';
 // Four-stage local onboarding. ID/selfie files are only previewed in-memory.
 let onboardingStep=1;
@@ -52,8 +51,9 @@ function finishOnboarding(){
  const finish=async(photo)=>{
   const didSave=await window.roommatchRegisterAccount({name,school,email,phone,area,bio,photo:photo||'',password:$('ob-password').value,prefs:{...prefs,budget:Number($('ob-budget').value),commute:Number($('ob-commute').value),sleep:$('ob-sleep').value,clean:$('ob-clean').value,mustSmoke:$('ob-smoke').value==='yes'}});
   if(!didSave)return;
+  if(didSave==='pending'){clearIdentityFiles();ephemeralFiles.avatar=null;showAuthGateway();$('gateway-error').textContent='가입 확인 이메일을 보냈어요. 메일의 인증 링크를 누른 다음 이 화면에서 로그인해 주세요. (메일 발송 한도에 따라 지연될 수 있어요.)';$('gateway-error').classList.add('has-error');return;}
   // Store only non-ID profile details in local storage; files were used for preview only.
-  try{localStorage.setItem(userAccountKey(),JSON.stringify({name,school,area,bio,photo:photo||''}));}catch{}
+  // Member profile is stored in Supabase. Do not duplicate personal data in localStorage.
   // Different signup profiles should not inherit somebody else's matching state.
   mutualMatches=new Set();sentLikes=new Set();persistMutual();
   clearIdentityFiles();ephemeralFiles.avatar=null;
@@ -129,4 +129,3 @@ $('ob-area').addEventListener('change',()=>toggleOther('ob-area','ob-area-other'
 $('ob-bio').addEventListener('input',updateBioCounter);
 document.querySelectorAll('[data-bio-example]').forEach(btn=>btn.addEventListener('click',()=>{$('ob-bio').value=btn.dataset.bioExample;updateBioCounter();$('ob-bio').focus();}));
 $('ob-form').addEventListener('input',e=>{if(e.target.classList.contains('field-invalid')){clearInlineErrors();$('ob-error').textContent='';}});
-

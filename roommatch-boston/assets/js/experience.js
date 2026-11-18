@@ -1,4 +1,3 @@
-
 'use strict';
 // RoomMatch Boston: discover, mutual-matching and conversation experience.
 // All state below is local to the visitor's browser. No networking is performed.
@@ -131,4 +130,3 @@ Object.assign(TRANSLATIONS, {
 });
 TRANS_KEYS.push(...Object.keys(TRANSLATIONS).filter(key=>!TRANS_KEYS.includes(key)));
 TRANS_KEYS.sort((a,b)=>b.length-a.length);
-
